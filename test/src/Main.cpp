@@ -12,7 +12,7 @@ int main() {
     fight.addEnemy(enemy1);
     fight.addEnemy(enemy2);
     fight.addEnemy(enemy3);
-    ug::FightActionSelectState::getInstance().setFight(&fight);
+    ug::FightActionSelectState::getInstance().loadFight(&fight);
     parameters.setStartingState(&ug::FightActionSelectState::getInstance());
     parameters.setStartWindowTitle("Undertale Test Game");
     parameters.setStartWindowWidth(1024);

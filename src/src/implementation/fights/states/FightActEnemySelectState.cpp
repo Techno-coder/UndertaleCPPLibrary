@@ -2,6 +2,7 @@
 #include "../../../headers/fights/states/FightActEnemySelectState.h"
 #include "../../../headers/fights/FightInterface.h"
 #include "../../../headers/fights/states/FightActState.h"
+#include "../../../headers/fights/states/FightActionSelectState.h"
 
 ug::FightActEnemySelectState ug::FightActEnemySelectState::instance;
 
@@ -16,7 +17,7 @@ void ug::FightActEnemySelectState::handleEvent(sf::Event &event) {
 
 void ug::FightActEnemySelectState::update() {
     if(interfaceControlsInstance->isXKeyPressed()) {
-        ug::FightActionSelectState::getInstance().setFight(currentFight, ug::FightInterface::ACT);
+        ug::FightActionSelectState::getInstance().loadFight(currentFight, ug::FightInterface::ACT);
         ug::UndertaleGame::getInstance()->getStateManager()->changeState(&ug::FightActionSelectState::getInstance());
         ug::UndertaleGame::getInstance()->getAudioManager()->playSound("MENU_MOVE_SOUND");
     }
