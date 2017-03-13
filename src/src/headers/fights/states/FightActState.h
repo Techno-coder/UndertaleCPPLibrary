@@ -9,9 +9,6 @@
 
 namespace ug {
 
-    /**
-     * @todo Add act stuff
-     */
     class FightActState : public State {
         static FightActState instance;
 
