@@ -2,9 +2,7 @@
 #define PROJECT_ACTCOMMAND_H
 
 #include <string>
-#include "enemies/Enemy.h"
-
-class Enemy;
+#include "ActCommandHandler.h"
 
 namespace ug {
 
@@ -22,6 +20,13 @@ namespace ug {
          * @todo Consider allowing the display name of the act to be changed
          */
         const std::string actName;
+
+        /**
+         * @todo Consider using unique pointers
+         */
+        ActCommandHandler* handler;
+
+        Enemy* attachedEnemy;
     public:
         /**
          * Non overrideable constructor
@@ -45,9 +50,17 @@ namespace ug {
         const std::string& getActName() const;
 
         /**
-         * Called when this act is selected from the menu
+        * Called when this act is selected
+        */
+        void handle();
+
+        void setHandler(ActCommandHandler* const newHandler);
+
+        /**
+         * Set the enemy this ActCommand instance should be attached to
+         * @param newEnemy The enemy
          */
-        virtual void handle(Enemy& enemy) = 0;
+        void setEnemy(Enemy* enemy);
     };
 }
 

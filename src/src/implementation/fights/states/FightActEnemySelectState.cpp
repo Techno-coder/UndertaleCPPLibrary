@@ -3,6 +3,7 @@
 #include "../../../headers/fights/FightInterface.h"
 #include "../../../headers/fights/states/FightActState.h"
 #include "../../../headers/fights/states/FightActionSelectState.h"
+#include "../../../headers/core/Logger.h"
 
 ug::FightActEnemySelectState ug::FightActEnemySelectState::instance;
 
@@ -35,8 +36,10 @@ void ug::FightActEnemySelectState::update() {
     }
 
     if(interfaceControlsInstance->isZKeyPressed()) {
-        ug::FightActState::getInstance().loadFight(currentFight);
-        ug::UndertaleGame::getInstance()->getStateManager()->changeState(&ug::FightActState::getInstance());
+        if(currentFight->getEnemies()[currentEnemySelected].getActCommands().size() > 0) {
+            ug::FightActState::getInstance().loadFight(currentFight);
+            ug::UndertaleGame::getInstance()->getStateManager()->changeState(&ug::FightActState::getInstance());
+        }
         interfaceControlsInstance->setZKeyPressed(false);
         ug::UndertaleGame::getInstance()->getAudioManager()->playSound("SELECT_SOUND");
     }
@@ -47,7 +50,7 @@ void ug::FightActEnemySelectState::draw() {
 
     auto enemiesIterator = currentFight->getEnemies().begin();
     int currentIndex = 0;
-    do {
+    while (enemiesIterator != currentFight->getEnemies().end()) {
         sf::Text asterix("*", ug::UndertaleGame::getInstance()->getResourceManager()->getFont("DETERMINATION_MONO_FONT"), 25);
         sf::Text option(enemiesIterator->getEnemyName(),
                         ug::UndertaleGame::getInstance()->getResourceManager()->getFont("DETERMINATION_MONO_FONT"), 25);
@@ -57,7 +60,7 @@ void ug::FightActEnemySelectState::draw() {
         ug::UndertaleGame::getInstance()->getRenderer()->drawRawSprite(option);
         ++enemiesIterator;
         ++currentIndex;
-    } while (enemiesIterator != currentFight->getEnemies().end());
+    }
 
     soulSprite.setYPosition((278 + (currentEnemySelected * 32)));
     ug::UndertaleGame::getInstance()->getRenderer()->drawSprite(soulSprite);
@@ -73,12 +76,16 @@ ug::FightActEnemySelectState &ug::FightActEnemySelectState::getInstance() {
 }
 
 void ug::FightActEnemySelectState::loadFight(ug::Fight *fight) {
-    currentEnemySelected = 0;
     currentFight = fight;
 }
 
 void ug::FightActEnemySelectState::loadFight(ug::Fight *fight, int currentlySelected) {
-    currentEnemySelected = currentlySelected;
+    if(currentlySelected >= fight->getEnemies().size()) {
+        currentEnemySelected = (int) fight->getEnemies().size() - 1;
+        ug::Logger::instance().warning("ACT_ENEMY_SELECT", "Variable currentlySelected is larger than the amount of enemies");
+    } else {
+        currentEnemySelected = currentlySelected;
+    }
     currentFight = fight;
 }
 

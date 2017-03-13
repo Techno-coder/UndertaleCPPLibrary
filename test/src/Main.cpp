@@ -1,17 +1,35 @@
 #include <core/UndertaleGame.h>
 #include <fights/states/FightActionSelectState.h>
+#include <iostream>
 
 using namespace std;
+
+class PrintActHandler : public ug::ActCommandHandler {
+public:
+    void handle(ug::Enemy &enemy) override {
+        std::cout << "Act used on " << enemy.getEnemyName() << std::endl;
+    }
+};
 
 int main() {
     ug::LaunchParameters parameters;
     ug::Fight fight;
     ug::Enemy enemy1("EnemyOne");
-    ug::Enemy enemy2("EnemyTwo");
-    ug::Enemy enemy3("EnemyThree");
+//    ug::Enemy enemy2("EnemyTwo");
+//    ug::Enemy enemy3("EnemyThree");
+    ug::ActCommand actCommand("Print");
+    ug::ActCommand actCommand1("Print1");
+    ug::ActCommand actCommand2("Print2");
+    PrintActHandler actHandler;
+    actCommand.setHandler(&actHandler);
+    actCommand1.setHandler(&actHandler);
+    actCommand2.setHandler(&actHandler);
+    enemy1.addActCommand(&actCommand);
+    enemy1.addActCommand(&actCommand1);
+    enemy1.addActCommand(&actCommand2);
     fight.addEnemy(enemy1);
-    fight.addEnemy(enemy2);
-    fight.addEnemy(enemy3);
+//    fight.addEnemy(enemy2);
+//    fight.addEnemy(enemy3);
     ug::FightActionSelectState::getInstance().loadFight(&fight);
     parameters.setStartingState(&ug::FightActionSelectState::getInstance());
     parameters.setStartWindowTitle("Undertale Test Game");

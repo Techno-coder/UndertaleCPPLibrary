@@ -14,3 +14,15 @@ ug::ActCommand::ActCommand(const std::string& actID, const std::string& actName)
 
 ug::ActCommand::ActCommand(const std::string& actName) : ActCommand(actName, actName) {
 }
+
+void ug::ActCommand::setHandler(ug::ActCommandHandler* const newHandler) {
+    handler = newHandler;
+}
+
+void ug::ActCommand::handle() {
+    handler->handle(*attachedEnemy);
+}
+
+void ug::ActCommand::setEnemy(ug::Enemy* enemy) {
+    attachedEnemy = enemy;
+}

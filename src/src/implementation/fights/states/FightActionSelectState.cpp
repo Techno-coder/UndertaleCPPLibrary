@@ -21,8 +21,10 @@ void ug::FightActionSelectState::update() {
         switch (interfaceInstance->getCurrentlySelectedButton()) {
             case FightInterface::FIGHT:break;
             case FightInterface::ACT:
-                ug::FightActEnemySelectState::getInstance().loadFight(currentFight);
-                ug::UndertaleGame::getInstance()->getStateManager()->changeState(&ug::FightActEnemySelectState::getInstance());
+                if(currentFight->getEnemies().size() > 0) {
+                    ug::FightActEnemySelectState::getInstance().loadFight(currentFight);
+                    ug::UndertaleGame::getInstance()->getStateManager()->changeState(&ug::FightActEnemySelectState::getInstance());
+                }
                 break;
             case FightInterface::ITEM:break;
             case FightInterface::MERCY:break;

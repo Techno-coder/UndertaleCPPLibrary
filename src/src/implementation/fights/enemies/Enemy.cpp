@@ -5,7 +5,8 @@ std::vector<ug::ActCommand*>& ug::Enemy::getActCommands() {
     return actCommands;
 }
 
-void ug::Enemy::addActCommand(ug::ActCommand *const actCommand) {
+void ug::Enemy::addActCommand(ug::ActCommand* const actCommand) {
+    actCommand->setEnemy(this);
     actCommands.push_back(actCommand);
 }
 

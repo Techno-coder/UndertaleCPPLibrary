@@ -18,12 +18,13 @@ namespace ug {
         FightInterfaceControls* interfaceControlsInstance;
         ug::Sprite soulSprite;
 
-        Fight* currentFight;
+        int optionSelectedX = 0;
+        int optionSelectedY = 0;
 
+        Fight* currentFight;
         int lastEnemySelected = 0;
     protected:
         void load() override;
-
     public:
         void initialize() override;
 

@@ -5,9 +5,9 @@
 #include "../ActCommand.h"
 #include "EnemyEventHandler.h"
 
-class ActCommand;
-
 namespace ug {
+    class ActCommand;
+
     class Enemy {
 
         /**
@@ -43,7 +43,7 @@ namespace ug {
          * Add an act command to be displayed
          * @param actCommand The act command
          */
-        void addActCommand(ActCommand*const actCommand);
+        void addActCommand(ActCommand* const actCommand);
 
         /**
          * Add a handler
@@ -83,6 +83,7 @@ namespace ug {
 
         //TODO get attack helicopter
     };
+
 }
 
 #endif //PROJECT_ENEMY_H
