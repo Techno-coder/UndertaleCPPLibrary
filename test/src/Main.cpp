@@ -27,6 +27,8 @@ int main() {
     enemy1.addActCommand(&actCommand);
     enemy1.addActCommand(&actCommand1);
     enemy1.addActCommand(&actCommand2);
+    enemy1.setMaxHealth(200);
+    enemy1.setHealth(180);
     fight.addEnemy(enemy1);
 //    fight.addEnemy(enemy2);
 //    fight.addEnemy(enemy3);

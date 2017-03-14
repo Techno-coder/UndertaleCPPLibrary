@@ -58,8 +58,8 @@ void ug::FightAttackEnemySelectState::draw() {
         maxHealth.setFillColor(sf::Color::Red);
         maxHealth.setPosition(275, 277 + (currentIndex * 32));
         sf::RectangleShape health(sf::Vector2f( enemiesIterator->getMaxHealth() == 0 ? 100 :
-                (enemiesIterator->getHealth() / enemiesIterator->getMaxHealth()) * 100, 20));
-        health.setFillColor(sf::Color::Red);
+                (enemiesIterator->getHealth() / (float) enemiesIterator->getMaxHealth()) * 100, 20));
+        health.setFillColor(sf::Color::Green);
         health.setPosition(275, 277 + (currentIndex * 32));
 
         ug::UndertaleGame::getInstance()->getRenderer()->drawRawSprite(asterix);
