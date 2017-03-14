@@ -17,9 +17,9 @@ int main() {
     ug::Enemy enemy1("EnemyOne");
 //    ug::Enemy enemy2("EnemyTwo");
 //    ug::Enemy enemy3("EnemyThree");
-    ug::ActCommand actCommand("Print");
-    ug::ActCommand actCommand1("Print1");
-    ug::ActCommand actCommand2("Print2");
+    ug::ActCommand actCommand("Check");
+    ug::ActCommand actCommand1("Taunt");
+    ug::ActCommand actCommand2("Eat");
     PrintActHandler actHandler;
     actCommand.setHandler(&actHandler);
     actCommand1.setHandler(&actHandler);
