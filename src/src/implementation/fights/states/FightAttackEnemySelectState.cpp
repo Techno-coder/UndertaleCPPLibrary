@@ -1,24 +1,24 @@
 
 #include "../../../headers/fights/FightInterface.h"
+#include "../../../headers/fights/states/FightActState.h"
 #include "../../../headers/fights/states/FightActionSelectState.h"
 #include "../../../headers/core/Logger.h"
-#include "../../../headers/fights/states/FightActEnemySelectState.h"
-#include "../../../headers/fights/states/FightActState.h"
+#include "../../../headers/fights/states/FightAttackEnemySelectState.h"
 
-ug::FightActEnemySelectState ug::FightActEnemySelectState::instance;
+ug::FightAttackEnemySelectState ug::FightAttackEnemySelectState::instance;
 
-void ug::FightActEnemySelectState::initialize() {
+void ug::FightAttackEnemySelectState::initialize() {
     soulSprite.setTextureID("SOUL_SPRITE");
     soulSprite.setXPosition(65);
 }
 
-void ug::FightActEnemySelectState::handleEvent(sf::Event &event) {
+void ug::FightAttackEnemySelectState::handleEvent(sf::Event &event) {
     interfaceControlsInstance->handleEvent(event);
 }
 
-void ug::FightActEnemySelectState::update() {
+void ug::FightAttackEnemySelectState::update() {
     if(interfaceControlsInstance->isXKeyPressed()) {
-        ug::FightActionSelectState::getInstance().loadFight(currentFight, ug::FightInterface::ACT);
+        ug::FightActionSelectState::getInstance().loadFight(currentFight, ug::FightInterface::FIGHT);
         ug::UndertaleGame::getInstance()->getStateManager()->changeState(&ug::FightActionSelectState::getInstance());
         ug::UndertaleGame::getInstance()->getAudioManager()->playSound("MENU_MOVE_SOUND");
     }
@@ -36,16 +36,13 @@ void ug::FightActEnemySelectState::update() {
     }
 
     if(interfaceControlsInstance->isZKeyPressed()) {
-        if(currentFight->getEnemies()[currentEnemySelected].getActCommands().size() > 0) {
-            ug::FightActState::getInstance().loadFight(currentFight);
-            ug::UndertaleGame::getInstance()->getStateManager()->changeState(&ug::FightActState::getInstance());
-        }
+        // TODO load attack state
         interfaceControlsInstance->setZKeyPressed(false);
         ug::UndertaleGame::getInstance()->getAudioManager()->playSound("SELECT_SOUND");
     }
 }
 
-void ug::FightActEnemySelectState::draw() {
+void ug::FightAttackEnemySelectState::draw() {
     FightInterface::getInstance().draw();
 
     auto enemiesIterator = currentFight->getEnemies().begin();
@@ -57,8 +54,19 @@ void ug::FightActEnemySelectState::draw() {
         asterix.setPosition(100, 270 + (currentIndex * 32));
         option.setPosition(130, 270 + (currentIndex * 32));
 
+        sf::RectangleShape maxHealth(sf::Vector2f(100, 20));
+        maxHealth.setFillColor(sf::Color::Red);
+        maxHealth.setPosition(275, 277 + (currentIndex * 32));
+        sf::RectangleShape health(sf::Vector2f( enemiesIterator->getMaxHealth() == 0 ? 100 :
+                (enemiesIterator->getHealth() / enemiesIterator->getMaxHealth()) * 100, 20));
+        health.setFillColor(sf::Color::Red);
+        health.setPosition(275, 277 + (currentIndex * 32));
+
         ug::UndertaleGame::getInstance()->getRenderer()->drawRawSprite(asterix);
         ug::UndertaleGame::getInstance()->getRenderer()->drawRawSprite(option);
+        ug::UndertaleGame::getInstance()->getRenderer()->drawRawSprite(maxHealth);
+        ug::UndertaleGame::getInstance()->getRenderer()->drawRawSprite(health);
+
         ++enemiesIterator;
         ++currentIndex;
     }
@@ -67,29 +75,29 @@ void ug::FightActEnemySelectState::draw() {
     ug::UndertaleGame::getInstance()->getRenderer()->drawSprite(soulSprite);
 }
 
-void ug::FightActEnemySelectState::load() {
+void ug::FightAttackEnemySelectState::load() {
     FightInterface::getInstance().load();
     interfaceControlsInstance = &FightInterfaceControls::getInstance();
 }
 
-ug::FightActEnemySelectState &ug::FightActEnemySelectState::getInstance() {
+ug::FightAttackEnemySelectState &ug::FightAttackEnemySelectState::getInstance() {
     return instance;
 }
 
-void ug::FightActEnemySelectState::loadFight(ug::Fight *fight) {
+void ug::FightAttackEnemySelectState::loadFight(ug::Fight *fight) {
     currentFight = fight;
 }
 
-void ug::FightActEnemySelectState::loadFight(ug::Fight *fight, int currentlySelected) {
+void ug::FightAttackEnemySelectState::loadFight(ug::Fight *fight, int currentlySelected) {
     if(currentlySelected >= fight->getEnemies().size()) {
         currentEnemySelected = (int) fight->getEnemies().size() - 1;
-        ug::Logger::instance().warning("ACT_ENEMY_SELECT", "Variable currentlySelected is larger than the amount of enemies");
+        ug::Logger::instance().warning("ATTACK_ENEMY_SELECT", "Variable currentlySelected is larger than the amount of enemies");
     } else {
         currentEnemySelected = currentlySelected;
     }
     currentFight = fight;
 }
 
-int ug::FightActEnemySelectState::getCurrentEnemySelected() const {
+int ug::FightAttackEnemySelectState::getCurrentEnemySelected() const {
     return currentEnemySelected;
 }

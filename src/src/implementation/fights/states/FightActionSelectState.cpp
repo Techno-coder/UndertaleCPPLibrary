@@ -3,6 +3,7 @@
 #include "../../../headers/fights/states/FightActEnemySelectState.h"
 #include "../../../headers/core/Logger.h"
 #include "../../../headers/fights/states/FightActionSelectState.h"
+#include "../../../headers/fights/states/FightAttackEnemySelectState.h"
 
 ug::FightActionSelectState ug::FightActionSelectState::instance;
 
@@ -19,7 +20,12 @@ void ug::FightActionSelectState::update() {
     if(interfaceControlsInstance->isZKeyPressed()) {
         //TODO finish change states
         switch (interfaceInstance->getCurrentlySelectedButton()) {
-            case FightInterface::FIGHT:break;
+            case FightInterface::FIGHT:
+                if(currentFight->getEnemies().size() > 0) {
+                    ug::FightAttackEnemySelectState::getInstance().loadFight(currentFight);
+                    ug::UndertaleGame::getInstance()->getStateManager()->changeState(&ug::FightAttackEnemySelectState::getInstance());
+                }
+                break;
             case FightInterface::ACT:
                 if(currentFight->getEnemies().size() > 0) {
                     ug::FightActEnemySelectState::getInstance().loadFight(currentFight);

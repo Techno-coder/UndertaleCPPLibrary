@@ -24,6 +24,9 @@ namespace ug {
         bool canSpare = false;
         std::string enemyName;
         std::string enemyID;
+
+        int health = 0;
+        int maxHealth = 0;
     public:
 
         /**
@@ -81,6 +84,13 @@ namespace ug {
          */
         const std::string &getEnemyID() const;
 
+        int getHealth() const;
+
+        void setHealth(int health);
+
+        int getMaxHealth() const;
+
+        void setMaxHealth(int maxHealth);
         //TODO get attack helicopter
     };
 

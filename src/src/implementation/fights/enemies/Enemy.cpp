@@ -41,3 +41,19 @@ const std::string &ug::Enemy::getEnemyID() const {
     return enemyID;
 }
 
+int ug::Enemy::getHealth() const {
+    return health;
+}
+
+void ug::Enemy::setHealth(int health) {
+    Enemy::health = health;
+}
+
+int ug::Enemy::getMaxHealth() const {
+    return maxHealth;
+}
+
+void ug::Enemy::setMaxHealth(int maxHealth) {
+    Enemy::maxHealth = maxHealth;
+}
+

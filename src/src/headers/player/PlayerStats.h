@@ -43,13 +43,13 @@ namespace ug {
          * The maximum health the player can have
          * @note This variable is ignored when using setHealth
          */
-        int maxHealth = 20;
+        int maxHealth = 0;
 
         /**
          * The amount of health the player has
          * @note The variable is limited by the variable maxHealth unless using setHealth
          */
-        int health = 10;
+        int health = 0;
 
         /**
          * The name of the player used in various places
