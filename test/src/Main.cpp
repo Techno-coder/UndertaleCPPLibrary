@@ -13,7 +13,7 @@ public:
 
 class PrintItemHandler : public ug::ItemHandler {
 public:
-    void handle() override {
+    void handle(ug::Item& item) override {
         std::cout << "Item used" << std::endl;
     }
 };

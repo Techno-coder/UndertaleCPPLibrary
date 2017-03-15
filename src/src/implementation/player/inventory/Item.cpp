@@ -16,7 +16,7 @@ const std::string &ug::Item::getItemName() {
 }
 
 void ug::Item::handle() {
-    handler->handle();
+    handler->handle(*this);
 }
 
 void ug::Item::setHandler(ug::ItemHandler *newHandler) {
