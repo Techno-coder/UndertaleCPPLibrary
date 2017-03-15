@@ -57,7 +57,7 @@ void ug::FightAttackEnemySelectState::draw() {
         sf::RectangleShape maxHealth(sf::Vector2f(100, 20));
         maxHealth.setFillColor(sf::Color::Red);
         maxHealth.setPosition(275, 277 + (currentIndex * 32));
-        sf::RectangleShape health(sf::Vector2f( enemiesIterator->getMaxHealth() == 0 ? 100 :
+        sf::RectangleShape health(sf::Vector2f(enemiesIterator->getMaxHealth() == 0 ? 100 :
                 (enemiesIterator->getHealth() / (float) enemiesIterator->getMaxHealth()) * 100, 20));
         health.setFillColor(sf::Color::Green);
         health.setPosition(275, 277 + (currentIndex * 32));

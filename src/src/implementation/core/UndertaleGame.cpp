@@ -55,15 +55,7 @@ void ug::UndertaleGame::startGameLoop() {
     }
 }
 
-void ug::UndertaleGame::startGame(const ug::LaunchParameters &parameters) {
-    window = new sf::RenderWindow;
-    window->create(parameters.isStartFullscreen() ? sf::VideoMode::getFullscreenModes()[0] :
-                   sf::VideoMode(parameters.getStartWindowWidth(), parameters.getStartWindowHeight()),
-                   parameters.getStartWindowTitle(),
-                   parameters.isStartFullscreen() ? sf::Style::Fullscreen : sf::Style::Default);
-    window->setFramerateLimit(120);
-
-    initializeModules(parameters);
+void ug::UndertaleGame::startGame() {
     startGameLoop();
 }
 
@@ -94,4 +86,15 @@ ug::UndertaleGame *const ug::UndertaleGame::getInstance() {
 
 void ug::UndertaleGame::cleanupGame() {
     delete instance;
+}
+
+void ug::UndertaleGame::initializeGame(const LaunchParameters& parameters) {
+    launchParameters = parameters;
+    window = new sf::RenderWindow;
+    window->create(launchParameters.isStartFullscreen() ? sf::VideoMode::getFullscreenModes()[0] :
+                   sf::VideoMode(launchParameters.getStartWindowWidth(), launchParameters.getStartWindowHeight()),
+                   launchParameters.getStartWindowTitle(),
+                   launchParameters.isStartFullscreen() ? sf::Style::Fullscreen : sf::Style::Default);
+    window->setFramerateLimit(120);
+    initializeModules(launchParameters);
 }

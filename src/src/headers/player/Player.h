@@ -3,6 +3,7 @@
 
 #include <string>
 #include "PlayerStats.h"
+#include "inventory/Item.h"
 
 namespace ug {
 
@@ -16,8 +17,17 @@ namespace ug {
          * @todo Consider allowing the library user to set a new instance of PlayerStats
          */
         PlayerStats playerStats;
+
+        /**
+         * @todo consider creating inventory class for handling items
+         */
+        std::vector<Item> inventory;
     public:
         PlayerStats& getPlayerStats();
+
+        std::vector<Item>& getInventory();
+
+        void addItem(Item& item);
     };
 }
 

@@ -4,6 +4,7 @@
 #include "../../../headers/core/Logger.h"
 #include "../../../headers/fights/states/FightActionSelectState.h"
 #include "../../../headers/fights/states/FightAttackEnemySelectState.h"
+#include "../../../headers/fights/states/FightItemSelectState.h"
 
 ug::FightActionSelectState ug::FightActionSelectState::instance;
 
@@ -32,11 +33,17 @@ void ug::FightActionSelectState::update() {
                     ug::UndertaleGame::getInstance()->getStateManager()->changeState(&ug::FightActEnemySelectState::getInstance());
                 }
                 break;
-            case FightInterface::ITEM:break;
+            case FightInterface::ITEM:
+                if(ug::UndertaleGame::getInstance()->getPlayer()->getInventory().size() > 0) {
+                    ug::FightItemSelectState::getInstance().loadFight(currentFight);
+                    ug::UndertaleGame::getInstance()->getStateManager()->changeState(&ug::FightItemSelectState::getInstance());
+                }
+                break;
             case FightInterface::MERCY:break;
             case FightInterface::NONE:break;
         }
         interfaceControlsInstance->setZKeyPressed(false);
+        //TODO Consider only playing sound when the button is able to be pressed
         ug::UndertaleGame::getInstance()->getAudioManager()->playSound("SELECT_SOUND");
     }
 

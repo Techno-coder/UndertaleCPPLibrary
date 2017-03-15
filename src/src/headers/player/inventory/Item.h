@@ -2,6 +2,7 @@
 #define PROJECT_ITEM_H
 
 #include <string>
+#include "ItemHandler.h"
 
 namespace ug {
     class Item {
@@ -15,6 +16,11 @@ namespace ug {
          * @todo Consider allowing itemName to change
          */
         const std::string itemName;
+
+        /**
+         * @todo consider adding a default handler
+         */
+        ItemHandler* handler;
     public:
         /**
          * Non overrideable constructor
@@ -40,7 +46,9 @@ namespace ug {
         /**
          * Called when this item is selected
          */
-        virtual void handle() = 0;
+         void handle();
+
+         void setHandler(ItemHandler* newHandler);
     };
 }
 

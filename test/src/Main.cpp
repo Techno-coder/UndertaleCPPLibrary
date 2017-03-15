@@ -11,8 +11,21 @@ public:
     }
 };
 
+class PrintItemHandler : public ug::ItemHandler {
+public:
+    void handle() override {
+        std::cout << "Item used" << std::endl;
+    }
+};
+
 int main() {
     ug::LaunchParameters parameters;
+    parameters.setStartingState(&ug::FightActionSelectState::getInstance());
+    parameters.setStartWindowTitle("Undertale Test Game");
+    parameters.setStartWindowWidth(1024);
+    parameters.setStartWindowHeight(768);
+    ug::UndertaleGame::getInstance()->initializeGame(parameters);
+
     ug::Fight fight;
     ug::Enemy enemy1("EnemyOne");
 //    ug::Enemy enemy2("EnemyTwo");
@@ -20,6 +33,10 @@ int main() {
     ug::ActCommand actCommand("Check");
     ug::ActCommand actCommand1("Taunt");
     ug::ActCommand actCommand2("Eat");
+    PrintItemHandler itemHandler;
+    ug::Item cookieTurd("CookieTurd");
+    cookieTurd.setHandler(&itemHandler);
+    ug::UndertaleGame::getInstance()->getPlayer()->addItem(cookieTurd);
     PrintActHandler actHandler;
     actCommand.setHandler(&actHandler);
     actCommand1.setHandler(&actHandler);
@@ -33,11 +50,8 @@ int main() {
 //    fight.addEnemy(enemy2);
 //    fight.addEnemy(enemy3);
     ug::FightActionSelectState::getInstance().loadFight(&fight);
-    parameters.setStartingState(&ug::FightActionSelectState::getInstance());
-    parameters.setStartWindowTitle("Undertale Test Game");
-    parameters.setStartWindowWidth(1024);
-    parameters.setStartWindowHeight(768);
-    ug::UndertaleGame::getInstance()->startGame(parameters);
+
+    ug::UndertaleGame::getInstance()->startGame();
     ug::UndertaleGame::cleanupGame();
     return 0;
 }

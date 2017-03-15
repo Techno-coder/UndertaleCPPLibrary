@@ -14,3 +14,11 @@ const std::string &ug::Item::getItemID() {
 const std::string &ug::Item::getItemName() {
     return itemName;
 }
+
+void ug::Item::handle() {
+    handler->handle();
+}
+
+void ug::Item::setHandler(ug::ItemHandler *newHandler) {
+    handler = newHandler;
+}

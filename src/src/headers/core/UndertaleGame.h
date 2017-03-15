@@ -20,6 +20,8 @@ namespace ug {
         ResourceManager* resourceManager;
         AudioManager* audioManager;
 
+        ug::LaunchParameters launchParameters;
+
         /**
          * Initialize classes that this class uses
          * @param parameters Variables that classes may use to initialize
@@ -74,10 +76,12 @@ namespace ug {
          */
         AudioManager* const getAudioManager();
 
+        void initializeGame(const LaunchParameters& parameter);
+
         /**
          * @todo finish
          */
-        void startGame(const LaunchParameters& parameters);
+        void startGame();
 
         /**
          * Call this function after the game has ended
