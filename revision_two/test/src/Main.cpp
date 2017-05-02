@@ -35,8 +35,11 @@ int main() {
     ug::ActCommand actCommand2("Eat");
     PrintItemHandler itemHandler;
     ug::Item cookieTurd("CookieTurd");
+    ug::Item squareLolly("SquareLolly");
     cookieTurd.setHandler(&itemHandler);
+    squareLolly.setHandler(&itemHandler);
     ug::UndertaleGame::getInstance()->getPlayer()->addItem(cookieTurd);
+    ug::UndertaleGame::getInstance()->getPlayer()->addItem(squareLolly);
     PrintActHandler actHandler;
     actCommand.setHandler(&actHandler);
     actCommand1.setHandler(&actHandler);
