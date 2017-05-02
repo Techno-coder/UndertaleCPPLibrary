@@ -1,4 +1,4 @@
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 14)
 project(UndertaleCPPLibrary)
 
 file(GLOB_RECURSE SOURCE_FILES
@@ -16,3 +16,9 @@ if(${SFML_FOUND})
     target_link_libraries(${PROJECT_NAME} ${SFML_LIBRARIES})
 endif()
 
+find_package(THOR 2 REQUIRED)
+if(THOR_FOUND)
+    include_directories(${THOR_INCLUDE_DIR})
+    include_directories(${AURORA_INCLUDE_DIR})
+    target_link_libraries(${PROJECT_NAME} ${THOR_LIBRARY})
+endif()
