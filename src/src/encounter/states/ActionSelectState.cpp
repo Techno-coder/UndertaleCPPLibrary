@@ -1,4 +1,5 @@
 #include "ActionSelectState.h"
+#include "ItemSelectState.h"
 
 void ug::ActionSelectState::onDraw(sf::RenderWindow &window) {
     EncounterState::onDraw(window);
@@ -12,12 +13,33 @@ ug::ActionSelectState::ActionSelectState() {
 }
 
 void ug::ActionSelectState::onKeyPressed(ug::Controls::Keys key) {
-    if(key == Controls::Keys::LEFT) {
-        --activeButton;
-        updateActiveButton();
-    } else if(key == Controls::Keys::RIGHT) {
-        ++activeButton;
-        updateActiveButton();
+    switch (key) {
+        case Controls::Keys::LEFT:
+            --activeButton;
+            updateActiveButton();
+            break;
+        case Controls::Keys::RIGHT:
+            ++activeButton;
+            updateActiveButton();
+            break;
+        case Controls::Keys::CONFIRM:
+            switch (activeButton) {
+                case 0:
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    states->pushState(std::unique_ptr<ug::State>(new ug::ItemSelectState));
+                    break;
+                case 3:
+                    break;
+                default:
+                    break;
+            }
+            audio.playSound(sounds.MENU_CONFIRM);
+            break;
+        default:
+            break;
     }
 }
 

@@ -33,6 +33,7 @@ void ug::EncounterState::onDraw(sf::RenderWindow &window) {
     window.draw(privateSprites.playerHealthFraction);
     window.draw(privateSprites.maxHealthBar);
     window.draw(privateSprites.currentHealthBar);
+    window.draw(dialogueBox);
     window.draw(soul);
 }
 
@@ -42,6 +43,12 @@ ug::EncounterState::EncounterState() {
 
     soul.setTexture(textures.SOUL);
     soul.setOrigin(soul.getGlobalBounds().width / 2, soul.getGlobalBounds().height / 2);
+
+    dialogueBox.setFillColor(sf::Color::Black);
+    dialogueBox.setOutlineColor(sf::Color::White);
+    dialogueBox.setOutlineThickness(5);
+    dialogueBox.setSize(sf::Vector2f(570, 130));
+    dialogueBox.setPosition(35, 255);
 }
 
 void ug::EncounterState::initializePrivateSprites() {

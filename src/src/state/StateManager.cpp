@@ -8,6 +8,7 @@ void ug::StateManager::pushState(std::unique_ptr<ug::State> state) {
 void ug::StateManager::popState() {
     states.top()->onExit();
     states.pop();
+    states.top()->onEnter();
 }
 
 void ug::StateManager::changeState(std::unique_ptr<ug::State> state) {

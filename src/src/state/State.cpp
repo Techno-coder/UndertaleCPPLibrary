@@ -4,6 +4,8 @@ ug::AudioManager ug::State::audio;
 ug::Controls ug::State::controls;
 ug::Player ug::State::player; //TODO remove later
 
+ug::State::GlobalFonts ug::State::fonts; //TODO remove later
+
 ug::State::State() {
     controls.setOnKeyPressedListener([](Controls::Keys key){});
 }

@@ -3,6 +3,7 @@
 
 #include <string>
 #include "../../external/ObservableField.h"
+#include "Inventory.h"
 
 namespace ug {
     class Player {
@@ -12,8 +13,12 @@ namespace ug {
             ObservableField<short> level{3};
             ObservableField<std::string> playerName{"CHARA"};
         } playerStatistics;
+        Inventory playerInventory;
     public:
+        Player(); //TODO REMOVE LATER
+
         PlayerStatistics& getStatistics();
+        Inventory& getInventory();
     };
 }
 

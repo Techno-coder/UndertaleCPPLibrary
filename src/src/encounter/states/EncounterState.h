@@ -45,6 +45,7 @@ namespace ug {
 
         static Sounds sounds;
         sf::Sprite soul;
+        sf::RectangleShape dialogueBox;
 
         virtual void onDraw(sf::RenderWindow& window) override;
     public:

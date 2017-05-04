@@ -6,13 +6,21 @@
 #include "../core/AudioManager.h"
 #include "../core/Controls.h"
 #include "StateManager.h"
-#include "../Player/Player.h"
+#include "../player/Player.h"
+#include "../../external/resources/FontsResources.h"
 
 
 namespace ug {
     class StateManager;
 
     class State {
+        class GlobalFonts : FontsResources {
+            const std::string PATH_PREFIX{"resources/default/all/"};
+        public:
+            FontsResourceItem MONO{PATH_PREFIX + "DTM-Mono.otf", this};
+            FontsResourceItem SANS{PATH_PREFIX + "DTM-Sans.otf", this};
+        };
+
         void event(sf::Event &event);
         void enter(StateManager* newStateManager);
 
@@ -21,6 +29,8 @@ namespace ug {
         static AudioManager audio;
         static Controls controls;
         static Player player; //TODO Temporary until a player save system is devised
+
+        static GlobalFonts fonts;
 
         StateManager* states;
 
