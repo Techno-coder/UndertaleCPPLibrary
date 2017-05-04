@@ -1,7 +1,14 @@
-#include <iostream>
+#include "../../src/external/ObservableField.h"
 
-using namespace std;
+ObservableField<short> poo;
+
+void test() {
+    FieldObserver<short> blah([=](short oldValue, short newValue){});
+    poo.registerObserver(blah);
+}
 
 int main() {
-    cout << "Default" << endl;
+//    std::unique_ptr<ug::State> stuff(new ug::ActionSelectState);
+//    ug::StateManager stateManager(std::move(stuff));
+    test();
 }
