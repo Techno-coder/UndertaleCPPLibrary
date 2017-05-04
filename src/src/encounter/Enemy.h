@@ -20,6 +20,8 @@ namespace ug {
         const unsigned long ID;
 
         std::string name = "Default Enemy";
+        bool spareable = false;
+
     public:
         Enemy(const GetDamagersFunction &getDamagers, const unsigned long& ID);
         Enemy(const GetDamagersFunction &getDamagers);
@@ -30,6 +32,9 @@ namespace ug {
 
         const std::string &getName() const;
         void setName(const std::string &name);
+
+        bool canSpare() const;
+        void setCanSpare(bool canSpare);
     };
 }
 
