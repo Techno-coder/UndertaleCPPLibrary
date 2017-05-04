@@ -1,7 +1,6 @@
 #ifndef PROJECT_OBSERVABLEFIELD_H
 #define PROJECT_OBSERVABLEFIELD_H
 
-#include <vector>
 #include <functional>
 #include <map>
 
@@ -18,43 +17,65 @@ class FieldObserver {
         return id;
     };
 
-    std::vector<ObservableField<T>*> fields;
+    std::map<unsigned long, ObservableField<T>*> fields;
     friend ObservableField<T>;
 public:
     FieldObserver(const std::function<void(T, T)> &callback) : ID(nextID()++), callback(callback) {}
+    FieldObserver& operator()(T oldValue, T newValue) {
+        callback(oldValue, newValue);
+        return *this;
+    }
+    FieldObserver& operator()(T newValue) { return operator()(T(), newValue); }
     ~FieldObserver() {
         for(auto field : fields) {
-            field->unregisterObserver(*this);
+            field.second->listeners.erase(ID);
         }
     }
 };
 
 template <typename T>
 class ObservableField {
+    const unsigned long ID;
     T internal;
 
-    std::map<unsigned long, FieldObserver<T>> listeners;
+    inline unsigned long& nextID() {
+        static unsigned long id = 0;
+        return id;
+    };
+
+    std::map<unsigned long, FieldObserver<T>*> listeners;
+    friend FieldObserver<T>;
 public:
-    T getValue() {
+    ObservableField() : ID(nextID()++) {}
+    ObservableField(T value) : ID(nextID()++), internal(value) {}
+
+    T getValue() const {
         return internal;
     };
-    void setValue(T value, bool triggerListeners) {
+    void setValue(const T &value, bool triggerListeners) {
         if(triggerListeners) {
             for(auto mapValue : listeners) {
-                mapValue.second.callback(internal, value);
+                mapValue.second->callback(internal, value);
             }
         }
         internal = value;
     }
-    void setValue(T value) { setValue(value, false); }
+    void setValue(const T &value) { setValue(value, false); }
 
-    void registerObserver(FieldObserver<T> &observer) {
-        observer.fields.push_back(this);
-        listeners.emplace(std::pair<unsigned long, FieldObserver<T>>(observer.ID, observer));
+    void operator=(const T &value) {
+        setValue(value);
+    }
+    operator T() const {
+        return getValue();
+    }
+
+    void registerObserver(FieldObserver<T> *const observer) {
+        observer->fields[ID] = this;
+        listeners[observer->ID] = observer;
     };
-    void unregisterObserver(const FieldObserver<T> &observer) {
-        printf("Unregisted stuff\n");
-        listeners.erase(observer.ID);
+    void unregisterObserver(FieldObserver<T> *const observer) {
+        observer->fields.erase(ID);
+        listeners.erase(observer->ID);
     };
 };
 

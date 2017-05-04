@@ -67,6 +67,44 @@ namespace ug {
         } privateSprites;
 
         void initializePrivateSprites();
+        void initializeObservers();
+
+        class PlayerStatisticsObservers {
+            EncounterState*const instance;
+            PrivateSprites*const sprites;
+
+            void updatePlayerHealthFraction() {
+                short health = instance->player.getStatistics().health;
+                short maxHealth = instance->player.getStatistics().maxHealth;
+                sprites->playerHealthFraction.setString((health < 10 ? "0" + std::to_string(health) :
+                std::to_string(health)) + " / " + (maxHealth < 10 ? "0" +
+                std::to_string(maxHealth) : std::to_string(maxHealth)));
+                sprites->playerHealthFraction.setPosition(
+                        sprites->maxHealthBar.getPosition().x + sprites->maxHealthBar.getSize().x + 10, 393);
+            }
+        public:
+            PlayerStatisticsObservers(EncounterState* const instance) : instance(instance), sprites(&instance->privateSprites) {}
+
+            FieldObserver<short> health{[&](short o, short n){
+                sprites->currentHealthBar.setSize({n * 1.5f, 20});
+                updatePlayerHealthFraction();
+            }};
+
+            FieldObserver<short> maxHealth{[&](short o, short n){
+                sprites->maxHealthBar.setSize({n * 1.5f, 20});
+                updatePlayerHealthFraction();
+            }};
+
+            FieldObserver<short> level{[&](short o, short n){
+                sprites->playerLevel.setString("LV " + std::to_string(n));
+                sprites->playerLevel.setPosition(sprites->playerName.getPosition().x +
+                        sprites->playerName.getGlobalBounds().width + 25, 393);
+            }};
+
+            FieldObserver<std::string> playerName{[&](std::string o, std::string n){
+                sprites->playerName.setString(n);
+            }};
+        } playerStatisticsObservers{this};
     };
 }
 

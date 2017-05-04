@@ -31,13 +31,14 @@ void ug::EncounterState::onDraw(sf::RenderWindow &window) {
     window.draw(privateSprites.playerLevel);
     window.draw(privateSprites.playerHealthLabel);
     window.draw(privateSprites.playerHealthFraction);
-    window.draw(privateSprites.currentHealthBar);
     window.draw(privateSprites.maxHealthBar);
+    window.draw(privateSprites.currentHealthBar);
     window.draw(soul);
 }
 
 ug::EncounterState::EncounterState() {
     initializePrivateSprites();
+    initializeObservers();
 
     soul.setTexture(textures.SOUL);
     soul.setOrigin(soul.getGlobalBounds().width / 2, soul.getGlobalBounds().height / 2);
@@ -73,4 +74,11 @@ void ug::EncounterState::initializePrivateSprites() {
 
     privateSprites.maxHealthBar.setFillColor(sf::Color::Red);
     privateSprites.maxHealthBar.setPosition(270, 400);
+}
+
+void ug::EncounterState::initializeObservers() {
+    player.getStatistics().health.registerObserver(&playerStatisticsObservers.health(player.getStatistics().health));
+    player.getStatistics().maxHealth.registerObserver(&playerStatisticsObservers.maxHealth(player.getStatistics().maxHealth));
+    player.getStatistics().playerName.registerObserver(&playerStatisticsObservers.playerName(player.getStatistics().playerName));
+    player.getStatistics().level.registerObserver(&playerStatisticsObservers.level(player.getStatistics().level));
 }

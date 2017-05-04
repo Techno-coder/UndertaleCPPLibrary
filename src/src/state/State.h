@@ -25,7 +25,7 @@ namespace ug {
         StateManager* states;
 
         /**
-         * Set the listeners and handlers here
+         * Set your listeners and handlers here
          */
         virtual void onEnter() {};
 

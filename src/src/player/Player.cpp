@@ -1,5 +1,5 @@
 #include "Player.h"
 
 ug::Player::PlayerStatistics& ug::Player::getStatistics() {
-    return statistics;
+    return playerStatistics;
 }
