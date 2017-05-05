@@ -60,7 +60,7 @@ public:
         }
         internal = value;
     }
-    void setValue(const T &value) { setValue(value, false); }
+    void setValue(const T &value) { setValue(value, true); }
 
     void operator=(const T &value) {
         setValue(value);

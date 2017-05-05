@@ -3,18 +3,14 @@
 
 unsigned long ug::Enemy::nextID;
 
-ug::Enemy::Enemy(const ug::GetDamagersFunction &getDamagers, const unsigned long &ID) :
-        getDamagersFunction(getDamagers), ID(ID) {}
-ug::Enemy::Enemy(const ug::GetDamagersFunction &getDamagers) : Enemy(getDamagers, nextID++) {}
+ug::Enemy::Enemy(const ug::ProjectileSpawner &projectileSpawner, const unsigned long &ID) :
+        projectileSpawner(projectileSpawner), ID(ID) {}
+ug::Enemy::Enemy(const ug::ProjectileSpawner &projectileSpawner) : Enemy(projectileSpawner, nextID++) {}
 
 ug::Enemy ug::Enemy::clone() const {
-    Enemy t(getDamagersFunction, ID);
+    Enemy t(projectileSpawner, ID);
     t.setName(t.getName());
     return t;
-}
-
-std::vector<ug::Damager> ug::Enemy::getDamagers(int frames) const {
-    return getDamagersFunction(frames);
 }
 
 const std::string &ug::Enemy::getName() const {
@@ -29,4 +25,8 @@ bool ug::Enemy::canSpare() const {
 }
 void ug::Enemy::setCanSpare(bool canSpare) {
     Enemy::spareable = canSpare;
+}
+
+const ug::ProjectileSpawner &ug::Enemy::getProjectileSpawner() const {
+    return projectileSpawner;
 }

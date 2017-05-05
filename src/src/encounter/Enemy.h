@@ -4,31 +4,32 @@
 #include <functional>
 #include <SFML/Graphics/Sprite.hpp>
 #include <string>
+#include "Projectile.h"
 
 namespace ug {
-    struct Damager {
-        sf::Sprite sprite;
-        short damageOnCollide;
-    };
-
-    typedef std::function<std::vector<Damager>(int frames)> GetDamagersFunction;
-
     class Enemy {
-        const GetDamagersFunction getDamagersFunction;
+        const ProjectileSpawner projectileSpawner;
 
         static unsigned long nextID;
+        //TODO figure out if ID is required still
         const unsigned long ID;
 
         std::string name = "Default Enemy";
         bool spareable = false;
 
     public:
-        Enemy(const GetDamagersFunction &getDamagers, const unsigned long& ID);
-        Enemy(const GetDamagersFunction &getDamagers);
+        Enemy(const ProjectileSpawner &projectileSpawner, const unsigned long& ID);
+        Enemy(const ProjectileSpawner &projectilesSpawner);
 
+        /**
+         * Creates a copy of this enemy instance
+         *
+         * @warning Does not copy the current spareable state of the enemy
+         * @return A copy of this enemy
+         */
         Enemy clone() const;
 
-        std::vector<Damager> getDamagers(int frames) const;
+        const ProjectileSpawner &getProjectileSpawner() const;
 
         const std::string &getName() const;
         void setName(const std::string &name);
