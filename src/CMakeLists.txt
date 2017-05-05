@@ -10,12 +10,6 @@ file(GLOB_RECURSE EXTERNAL_SOURCE_FILES
         "${CMAKE_CURRENT_SOURCE_DIR}/external/*.h"
         )
 
-set(CMAKE_MODULE_PATH ../libraries/)
-
 add_library(UndertaleCPPLibrary SHARED ${SOURCE_FILES} ${EXTERNAL_SOURCE_FILES})
-
-find_package(SFML 2.4.2 COMPONENTS system window graphics audio network REQUIRED)
-if(${SFML_FOUND})
-    include_directories(${SFML_INCLUDE_DIR})
-    target_link_libraries(${PROJECT_NAME} ${SFML_LIBRARIES})
-endif()
+include_directories(../SFML-2.4.2/include/)
+target_link_libraries(${PROJECT_NAME} sfml-system sfml-audio sfml-graphics sfml-window)

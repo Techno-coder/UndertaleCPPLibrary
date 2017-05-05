@@ -1,4 +1,5 @@
 #include "ActEnemySelectState.h"
+#include "ActSelectState.h"
 
 ug::ActEnemySelectState::ActEnemySelectState(const std::shared_ptr<ug::Encounter> &encounter) : EnemySelectState(
         encounter) {
@@ -6,5 +7,5 @@ ug::ActEnemySelectState::ActEnemySelectState(const std::shared_ptr<ug::Encounter
 }
 
 void ug::ActEnemySelectState::goToNextState(std::vector<Enemy>::iterator selectedEnemy) {
-    //TODO
+    states->pushState(std::unique_ptr<ug::State>(new ug::ActSelectState(encounter, selectedEnemy)));
 }

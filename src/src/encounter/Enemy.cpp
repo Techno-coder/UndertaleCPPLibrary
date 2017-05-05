@@ -10,6 +10,7 @@ ug::Enemy::Enemy(const ug::ProjectileSpawner &projectileSpawner) : Enemy(project
 ug::Enemy ug::Enemy::clone() const {
     Enemy t(projectileSpawner, ID);
     t.getAttributes() = attributes;
+    t.getActs() = acts;
     return t;
 }
 

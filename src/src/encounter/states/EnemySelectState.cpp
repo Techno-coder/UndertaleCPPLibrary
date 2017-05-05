@@ -10,12 +10,18 @@ void ug::EnemySelectState::onDraw(sf::RenderWindow &window) {
 }
 
 void ug::EnemySelectState::generateSprites() {
+    generatedSprites.clear();
     int currentIndex = 0;
     for(auto &enemy : *enemyCache) {
         sf::Text asterix("*", State::fonts.MONO, 25);
         sf::Text option(enemy.getAttributes().name, State::fonts.MONO, 25);
         asterix.setPosition(100, 270 + (currentIndex * 32));
         option.setPosition(130, 270 + (currentIndex * 32));
+
+        if(enemy.getAttributes().spareable) {
+            asterix.setFillColor(sf::Color::Yellow);
+            option.setFillColor(sf::Color::Yellow);
+        }
 
         generatedSprites.push_back(asterix);
         generatedSprites.push_back(option);

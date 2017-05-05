@@ -1,7 +1,7 @@
 #ifndef PROJECT_CONTROLSMANAGER_H
 #define PROJECT_CONTROLSMANAGER_H
 
-#include <SFML/window/Event.hpp>
+#include <SFML/Window/Event.hpp>
 #include <functional>
 #include <map>
 

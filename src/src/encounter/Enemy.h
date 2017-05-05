@@ -12,7 +12,7 @@ namespace ug {
 
     class Act {
         static unsigned long nextID;
-        const unsigned long ID;
+        unsigned long ID;
 
         std::string name = "Default Name";
         ActFunction onAct;

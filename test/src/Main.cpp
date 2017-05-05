@@ -10,9 +10,13 @@ int main() {
     ug::Encounter encounter;
     ug::Enemy temp((TestEnemyProjectileSpawner()));
     temp.getAttributes().name = "Succ";
-    temp.getActs().push_back(ug::Act([](ug::Enemy &enemy){}));
+    ug::Act poo([](ug::Enemy &enemy){});
+    poo.setName("GAH BLABH");
+    temp.getActs().push_back(poo);
+    auto otherTemp = temp.clone();
+    otherTemp.getAttributes().spareable = true;
     encounter.addEnemy(temp.clone());
-    encounter.addEnemy(temp.clone());
+    encounter.addEnemy(otherTemp);
     encounter.addEnemy(temp.clone());
 
     std::unique_ptr<ug::State> stuff(new ug::ActionSelectState(std::shared_ptr<ug::Encounter>(&encounter)));

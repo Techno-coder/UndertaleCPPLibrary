@@ -1,6 +1,8 @@
 #include "ActionSelectState.h"
 #include "item/ItemSelectState.h"
 #include "fight/FightEnemySelectState.h"
+#include "act/ActEnemySelectState.h"
+#include "MercySelectState.h"
 
 void ug::ActionSelectState::onDraw(sf::RenderWindow &window) {
     EncounterState::onDraw(window);
@@ -29,11 +31,13 @@ void ug::ActionSelectState::onKeyPressed(ug::Controls::Keys key) {
                     states->pushState(std::unique_ptr<State>(new FightEnemySelectState(encounter)));
                     break;
                 case 1:
+                    states->pushState(std::unique_ptr<State>(new ActEnemySelectState(encounter)));
                     break;
                 case 2:
                     states->pushState(std::unique_ptr<State>(new ItemSelectState(encounter)));
                     break;
                 case 3:
+                    states->pushState(std::unique_ptr<State>(new MercySelectState(encounter)));
                     break;
                 default:
                     break;
