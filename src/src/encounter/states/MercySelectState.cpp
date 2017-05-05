@@ -49,6 +49,7 @@ void ug::MercySelectState::generateSprites() {
     sf::Text option("Spare", State::fonts.MONO, 25);
     for(auto &enemy : encounter->getAllEnemies()) {
         if(enemy.getAttributes().spareable) {
+            asterix.setFillColor(sf::Color::Yellow);
             option.setFillColor(sf::Color::Yellow);
             break;
         }
@@ -58,6 +59,7 @@ void ug::MercySelectState::generateSprites() {
     generatedSprites.push_back(asterix);
     generatedSprites.push_back(option);
 
+    asterix.setFillColor(sf::Color::White);
     option.setFillColor(sf::Color::White);
     option.setString("Flee");
     asterix.setPosition(100, 270 + 32);

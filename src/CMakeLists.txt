@@ -10,6 +10,8 @@ file(GLOB_RECURSE EXTERNAL_SOURCE_FILES
         "${CMAKE_CURRENT_SOURCE_DIR}/external/*.h"
         )
 
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3")
+
 add_library(UndertaleCPPLibrary SHARED ${SOURCE_FILES} ${EXTERNAL_SOURCE_FILES})
 include_directories(../SFML-2.4.2/include/)
 target_link_libraries(${PROJECT_NAME} sfml-system sfml-audio sfml-graphics sfml-window)
