@@ -1,5 +1,6 @@
 #include "ActionSelectState.h"
-#include "ItemSelectState.h"
+#include "item/ItemSelectState.h"
+#include "fight/FightEnemySelectState.h"
 
 void ug::ActionSelectState::onDraw(sf::RenderWindow &window) {
     EncounterState::onDraw(window);
@@ -7,7 +8,7 @@ void ug::ActionSelectState::onDraw(sf::RenderWindow &window) {
 
 void ug::ActionSelectState::onUpdate() {}
 
-ug::ActionSelectState::ActionSelectState() {
+ug::ActionSelectState::ActionSelectState(const std::shared_ptr<Encounter> &encounter) : EncounterState(encounter) {
     EncounterState::setActiveButton(ActiveButton::FIGHT);
     EncounterState::soul.setPosition(47, 452);
 }
@@ -25,11 +26,12 @@ void ug::ActionSelectState::onKeyPressed(ug::Controls::Keys key) {
         case Controls::Keys::CONFIRM:
             switch (activeButton) {
                 case 0:
+                    states->pushState(std::unique_ptr<State>(new FightEnemySelectState(encounter)));
                     break;
                 case 1:
                     break;
                 case 2:
-                    states->pushState(std::unique_ptr<ug::State>(new ug::ItemSelectState));
+                    states->pushState(std::unique_ptr<State>(new ItemSelectState(encounter)));
                     break;
                 case 3:
                     break;

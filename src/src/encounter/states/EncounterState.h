@@ -5,11 +5,13 @@
 #include "../../../external/resources/TexturesResources.h"
 #include "../../../external/resources/SoundsResources.h"
 #include "../../../external/resources/FontsResources.h"
+#include "../Encounter.h"
 
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <map>
+#include <memory>
 
 namespace ug {
     class EncounterState : public State {
@@ -40,6 +42,8 @@ namespace ug {
             SoundsResourceItem MENU_MOVE{PATH_PREFIX + "menumove.wav", this};
         };
     protected:
+        std::shared_ptr<Encounter> encounter;
+
         enum class ActiveButton{FIGHT, ACT, ITEM, MERCY} activeButton;
         void setActiveButton(ActiveButton button);
 
@@ -49,7 +53,7 @@ namespace ug {
 
         virtual void onDraw(sf::RenderWindow& window) override;
     public:
-        EncounterState();
+        EncounterState(const std::shared_ptr<Encounter> &encounter);
     private:
         static Textures textures;
         static Fonts fonts;

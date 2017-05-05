@@ -1,7 +1,7 @@
 #ifndef PROJECT_ITEMSELECTSTATE_H
 #define PROJECT_ITEMSELECTSTATE_H
 
-#include "EncounterState.h"
+#include "../EncounterState.h"
 
 namespace ug {
     class ItemSelectState : public EncounterState {
@@ -12,14 +12,14 @@ namespace ug {
         std::vector<sf::Text> generatedSprites;
 
         void onKeyPressed(Controls::Keys key);
-        void generateSprites(const std::vector<ug::Item> &items);
+        void generateSprites();
     protected:
         void onEnter() override;
 
         void onDraw(sf::RenderWindow &window) override;
 
     public:
-        ItemSelectState();
+        ItemSelectState(std::shared_ptr<Encounter> encounter);
     };
 }
 

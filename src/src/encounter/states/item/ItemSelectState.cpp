@@ -8,7 +8,7 @@ void ug::ItemSelectState::onEnter() {
     }
 
     controls.setOnKeyPressedListener(std::bind(&ItemSelectState::onKeyPressed, this, std::placeholders::_1));
-    generateSprites(itemCache);
+    generateSprites();
     onKeyPressed(Controls::Keys::INVALID);
 }
 
@@ -19,7 +19,7 @@ void ug::ItemSelectState::onDraw(sf::RenderWindow &window) {
     }
 }
 
-ug::ItemSelectState::ItemSelectState() {
+ug::ItemSelectState::ItemSelectState(std::shared_ptr<Encounter> encounter) : EncounterState(encounter) {
     EncounterState::setActiveButton(ActiveButton::ITEM);
 }
 
@@ -61,26 +61,21 @@ void ug::ItemSelectState::onKeyPressed(ug::Controls::Keys key) {
     soul.setPosition(73 + (optionsX * 260), 286 + (optionsY * 32));
 }
 
-void ug::ItemSelectState::generateSprites(const std::vector<ug::Item> &items) {
+void ug::ItemSelectState::generateSprites() {
     int currentX = 0;
     int currentY = 0;
-    auto itemsIterator = items.begin();
-    while (itemsIterator != items.end()) {
+    for(const auto &item : itemCache) {
         sf::Text asterix("*", State::fonts.MONO, 25);
-        sf::Text option((*itemsIterator).getName(), State::fonts.MONO, 25);
+        sf::Text option(item.getName(), State::fonts.MONO, 25);
         asterix.setPosition(100 + (currentX * 260), 270 + (currentY * 32));
         option.setPosition(130 + (currentX * 260), 270 + (currentY * 32));
         generatedSprites.push_back(asterix);
         generatedSprites.push_back(option);
-        ++itemsIterator;
 
-        if(currentY >= 1 && currentX >= 1) {
-            break;
-        }
+        if(currentY >= 1 && currentX >= 1) break;
 
-        if(currentX == 0) {
-            currentX = 1;
-        } else if(currentX == 1) {
+        if(currentX == 0) currentX = 1;
+        else if(currentX == 1) {
             currentX = 0;
             ++currentY;
         }

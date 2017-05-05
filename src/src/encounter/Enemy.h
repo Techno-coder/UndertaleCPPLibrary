@@ -7,16 +7,37 @@
 #include "Projectile.h"
 
 namespace ug {
+    class Enemy;
+    typedef std::function<void(Enemy &enemy)> ActFunction;
+
+    class Act {
+        static unsigned long nextID;
+        const unsigned long ID;
+
+        std::string name = "Default Name";
+        ActFunction onAct;
+    public:
+        Act(ActFunction action);
+        void execute(Enemy &enemy);
+
+        const std::string &getName() const;
+        void setName(const std::string &name);
+    };
+
     class Enemy {
         const ProjectileSpawner projectileSpawner;
+        std::vector<Act> acts;
 
         static unsigned long nextID;
         //TODO figure out if ID is required still
         const unsigned long ID;
 
-        std::string name = "Default Enemy";
-        bool spareable = false;
-
+        struct Attributes {
+            std::string name = "Default Enemy";
+            bool spareable = false;
+            int health = 0;
+            int maxHealth = 0;
+        } attributes;
     public:
         Enemy(const ProjectileSpawner &projectileSpawner, const unsigned long& ID);
         Enemy(const ProjectileSpawner &projectilesSpawner);
@@ -31,11 +52,8 @@ namespace ug {
 
         const ProjectileSpawner &getProjectileSpawner() const;
 
-        const std::string &getName() const;
-        void setName(const std::string &name);
-
-        bool canSpare() const;
-        void setCanSpare(bool canSpare);
+        std::vector<Act>& getActs();
+        Attributes &getAttributes();
     };
 }
 

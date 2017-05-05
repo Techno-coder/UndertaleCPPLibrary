@@ -37,7 +37,7 @@ void ug::EncounterState::onDraw(sf::RenderWindow &window) {
     window.draw(soul);
 }
 
-ug::EncounterState::EncounterState() {
+ug::EncounterState::EncounterState(const std::shared_ptr<Encounter> &encounter) : encounter(encounter) {
     initializePrivateSprites();
     initializeObservers();
 

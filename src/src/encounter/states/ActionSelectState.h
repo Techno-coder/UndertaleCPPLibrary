@@ -10,7 +10,7 @@ namespace ug {
         void onKeyPressed(Controls::Keys key);
         void updateActiveButton();
     public:
-        ActionSelectState();
+        ActionSelectState(const std::shared_ptr<Encounter> &encounter);
 
         void onEnter() override;
 
