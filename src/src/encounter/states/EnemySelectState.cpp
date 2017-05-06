@@ -12,7 +12,7 @@ void ug::EnemySelectState::onDraw(sf::RenderWindow &window) {
 void ug::EnemySelectState::generateSprites() {
     generatedSprites.clear();
     int currentIndex = 0;
-    for(auto &enemy : *enemyCache) {
+    for(auto &enemy : enemyCache) {
         sf::Text asterix("*", State::fonts.MONO, 25);
         sf::Text option(enemy.getAttributes().name, State::fonts.MONO, 25);
         asterix.setPosition(100, 270 + (currentIndex * 32));
@@ -39,7 +39,7 @@ void ug::EnemySelectState::onKeyPressed(ug::Controls::Keys key) {
             }
             break;
         case Controls::Keys::DOWN:
-            if(selectedOption < enemyCache->size() - 1) {
+            if(selectedOption < enemyCache.size() - 1) {
                 ++selectedOption;
                 audio.playSound(sounds.MENU_MOVE);
             }
@@ -58,8 +58,7 @@ void ug::EnemySelectState::onKeyPressed(ug::Controls::Keys key) {
 }
 
 void ug::EnemySelectState::onEnter() {
-    enemyCache = &encounter->getAllEnemies();
-    if(enemyCache->empty()) {
+    if(enemyCache.empty()) {
         states->popState();
         return;
     }

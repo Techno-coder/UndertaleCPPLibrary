@@ -12,8 +12,6 @@ namespace ug {
         void onKeyPressed(Controls::Keys key);
         void generateSprites();
     protected:
-        std::vector<Enemy>* enemyCache;
-
         virtual void onEnter() override;
 
         virtual void onDraw(sf::RenderWindow &window) override;

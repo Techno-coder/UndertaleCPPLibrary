@@ -17,13 +17,16 @@ namespace ug {
             TexturesResourceItem SLICE_3{SLICE_PREFIX + "spr_slice_o_3.png", this};
             TexturesResourceItem SLICE_4{SLICE_PREFIX + "spr_slice_o_4.png", this};
             TexturesResourceItem SLICE_5{SLICE_PREFIX + "spr_slice_o_5.png", this};
-        } textures; //TODO potentially be static
+        }; //TODO potentially be static
         class FightSounds : public SoundsResources {
             const std::string PATH_PREFIX{"resources/default/encounter/fight/"};
         public:
             SoundsResourceItem SLICE{PATH_PREFIX + "slice.wav", this};
             SoundsResourceItem HIT{PATH_PREFIX + "hitsound.wav", this};
-        } sounds;
+        };
+
+        static FightTextures textures;
+        static FightSounds sounds;
 
         sf::Sprite fightBar;
         sf::RectangleShape positioner{sf::Vector2f(7, 122)};

@@ -40,10 +40,10 @@ void ug::EncounterState::onDraw(sf::RenderWindow &window) {
     window.draw(soul);
 }
 
-ug::EncounterState::EncounterState(const std::shared_ptr<Encounter> &encounter) : encounter(encounter) {
+ug::EncounterState::EncounterState(const std::shared_ptr<Encounter> &encounter) :
+        encounter(encounter), enemyCache(encounter->getAllEnemies()) {
     initializePrivateSprites();
     initializeObservers();
-    enemyCache = encounter->getAllEnemies();
 
     soul.setTexture(textures.SOUL);
     soul.setOrigin(soul.getGlobalBounds().width / 2, soul.getGlobalBounds().height / 2);

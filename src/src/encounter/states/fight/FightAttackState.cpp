@@ -1,5 +1,8 @@
 #include "FightAttackState.h"
 
+ug::FightAttackState::FightTextures ug::FightAttackState::textures;
+ug::FightAttackState::FightSounds ug::FightAttackState::sounds;
+
 ug::FightAttackState::FightAttackState(const std::shared_ptr<ug::Encounter> &encounter,
                                        std::vector<Enemy>::iterator enemy) :
         EncounterState(encounter), enemy(enemy) {
