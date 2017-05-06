@@ -44,7 +44,7 @@ namespace ug {
     protected:
         std::shared_ptr<Encounter> encounter;
 
-        enum class ActiveButton{FIGHT, ACT, ITEM, MERCY} activeButton;
+        enum class ActiveButton{FIGHT, ACT, ITEM, MERCY, NONE} activeButton;
         void setActiveButton(ActiveButton button);
 
         static Sounds sounds;
@@ -93,17 +93,17 @@ namespace ug {
         public:
             PlayerStatisticsObservers(EncounterState* const instance) : instance(instance), sprites(&instance->privateSprites) {}
 
-            FieldObserver<short> health{[&](short o, short n){
+            FieldObserver<int> health{[&](short o, short n){
                 sprites->currentHealthBar.setSize({n * 1.5f, 20});
                 updatePlayerHealthFraction();
             }};
 
-            FieldObserver<short> maxHealth{[&](short o, short n){
+            FieldObserver<int> maxHealth{[&](short o, short n){
                 sprites->maxHealthBar.setSize({n * 1.5f, 20});
                 updatePlayerHealthFraction();
             }};
 
-            FieldObserver<short> level{[&](short o, short n){
+            FieldObserver<int> level{[&](short o, short n){
                 sprites->playerLevel.setString("LV " + std::to_string(n));
                 sprites->playerLevel.setPosition(sprites->playerName.getPosition().x +
                         sprites->playerName.getGlobalBounds().width + 25, 393);

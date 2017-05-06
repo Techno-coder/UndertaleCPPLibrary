@@ -24,9 +24,15 @@ namespace ug {
             SoundsResourceItem SLICE{PATH_PREFIX + "slice.wav", this};
             SoundsResourceItem HIT{PATH_PREFIX + "hitsound.wav", this};
         };
+        class FightFonts : public FontsResources {
+            const std::string PATH_PREFIX{"resources/default/encounter/fight/"};
+        public:
+            FontsResourceItem HACHICRO{PATH_PREFIX + "hachicro.ttf", this};
+        };
 
         static FightTextures textures;
         static FightSounds sounds;
+        static FightFonts fonts;
 
         sf::Sprite fightBar;
         sf::RectangleShape positioner{sf::Vector2f(7, 122)};
@@ -35,7 +41,7 @@ namespace ug {
 
         sf::RectangleShape maxHealthRect;
         sf::RectangleShape healthRect;
-        sf::Text damageText;
+        sf::Text damageText{"", fonts.HACHICRO};
 
         int damageDealt;
 
@@ -46,7 +52,7 @@ namespace ug {
 
         void onKeyPress(Controls::Keys key);
         void calculateDamageDealt();
-        float getRandomFloat(float min, float max);
+        float getRandomFloat(float max);
     protected:
         void onEnter() override;
 

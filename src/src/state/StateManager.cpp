@@ -57,6 +57,8 @@ sf::View getLetterboxView(sf::View view, int width, int height) {
 }
 
 void ug::StateManager::startGameLoop() {
+    srand((unsigned) time(nullptr));
+
     sf::RenderWindow window;
     window.create(sf::VideoMode(640, 480), "Undertale Game");
     window.setVerticalSyncEnabled(true);

@@ -19,6 +19,8 @@ void ug::EncounterState::setActiveButton(ug::EncounterState::ActiveButton button
             privateSprites.itemButton.setTexture(textures.ITEM_HIGHLIGHT); break;
         case ActiveButton::MERCY:
             privateSprites.mercyButton.setTexture(textures.MERCY_HIGHLIGHT); break;
+        case ActiveButton::NONE:
+            break;
     }
 }
 

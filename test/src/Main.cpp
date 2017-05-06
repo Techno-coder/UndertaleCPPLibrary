@@ -19,6 +19,9 @@ int main() {
     temp.getActs().push_back(poo);
     temp.getActs().push_back(poo);
     temp.getActs().push_back(poo);
+    temp.getAttributes().health = 80;
+    temp.getAttributes().maxHealth = 100;
+    auto ASDUIUHSADH = temp.clone(sf::Vector2f(123, 123));
     encounter.addEnemy(temp.clone(sf::Vector2f(100, 150)));
     encounter.addEnemy(temp.clone(sf::Vector2f(250, 150)));
     encounter.addEnemy(temp.clone(sf::Vector2f(400, 150)));

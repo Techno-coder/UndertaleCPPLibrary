@@ -20,7 +20,6 @@ void ug::FightEnemySelectState::onDraw(sf::RenderWindow &window) {
 
 void ug::FightEnemySelectState::goToNextState(std::vector<Enemy>::iterator selectedEnemy) {
     std::unique_ptr<ug::State> temp(new FightAttackState(encounter, selectedEnemy));
-    states->popState();
     states->changeState(std::move(temp));
 }
 
@@ -33,7 +32,7 @@ void ug::FightEnemySelectState::generateHealthBars() {
 
         int enemyHealth = enemy.getAttributes().health;
         int enemyMaxHealth = enemy.getAttributes().maxHealth;
-        sf::RectangleShape health(sf::Vector2f(enemyHealth == 0 ? 100 : (enemyMaxHealth / (float) enemyMaxHealth), 20));
+        sf::RectangleShape health(sf::Vector2f(enemyHealth == 0 ? 100 : (enemyHealth / (float) enemyMaxHealth) * 100, 20));
         health.setFillColor(sf::Color::Green);
         health.setPosition(275, 277 + (currentIndex * 32));
 

@@ -13,7 +13,11 @@ ug::Enemy::Enemy(const ug::ProjectileSpawner &projectileSpawner, sf::Sprite spri
 ug::Enemy ug::Enemy::clone(sf::Vector2f position) const {
     Enemy t(projectileSpawner, sprite, ID);
     t.getSprite().setPosition(position);
-    t.getAttributes() = attributes;
+    t.getAttributes().name = attributes.name;
+    t.getAttributes().defense = attributes.defense;
+    t.getAttributes().spareable = attributes.spareable;
+    t.getAttributes().maxHealth.setValue(attributes.maxHealth.getValue(), false);
+    t.getAttributes().health.setValue(attributes.health.getValue(), false);
     t.getActs() = acts;
     return t;
 }
