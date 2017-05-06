@@ -50,7 +50,6 @@ namespace priv
     // If in debug mode, perform a test on every call
     // The do-while loop is needed so that alCheck can be used as a single statement in if/else branches
     #define alCheck(expr) do { expr; sf::priv::alCheckError(__FILE__, __LINE__, #expr); } while (false)
-
 #else
 
     // Else, we don't add any overhead

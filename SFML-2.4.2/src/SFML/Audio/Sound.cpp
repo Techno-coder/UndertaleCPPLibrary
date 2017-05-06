@@ -84,7 +84,7 @@ void Sound::pause()
 ////////////////////////////////////////////////////////////
 void Sound::stop()
 {
-    alCheck(alSourceStop(m_source));
+   alCheck(alSourceStop(m_source));
 }
 
 

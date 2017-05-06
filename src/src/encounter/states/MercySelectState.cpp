@@ -68,3 +68,5 @@ void ug::MercySelectState::generateSprites() {
     generatedSprites.push_back(asterix);
     generatedSprites.push_back(option);
 }
+
+ug::MercySelectState::~MercySelectState() {}

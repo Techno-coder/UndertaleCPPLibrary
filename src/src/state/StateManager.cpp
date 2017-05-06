@@ -8,12 +8,14 @@ void ug::StateManager::pushState(std::unique_ptr<ug::State> state) {
 void ug::StateManager::popState() {
     states.top()->onExit();
     states.pop();
-    states.top()->onEnter();
+    states.top()->enter(this);
 }
 
 void ug::StateManager::changeState(std::unique_ptr<ug::State> state) {
-    popState();
-    pushState(std::move(state));
+    states.top()->onExit();
+    states.pop();
+    states.push(std::move(state));
+    states.top()->enter(this);
 }
 
 void ug::StateManager::handleEvent(sf::Event &event) {

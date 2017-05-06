@@ -50,10 +50,13 @@ namespace ug {
         static Sounds sounds;
         sf::Sprite soul;
         sf::RectangleShape dialogueBox;
+        std::vector<ug::Enemy>& enemyCache;
 
         virtual void onDraw(sf::RenderWindow& window) override;
     public:
         EncounterState(const std::shared_ptr<Encounter> &encounter);
+        virtual ~EncounterState();
+
     private:
         static Textures textures;
         static Fonts fonts;

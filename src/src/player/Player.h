@@ -7,11 +7,13 @@
 
 namespace ug {
     class Player {
-        struct PlayerStatistics {
+        struct PlayerStatistics { //TODO load from somewhere later
             ObservableField<short> health{10};
             ObservableField<short> maxHealth{20};
             ObservableField<short> level{3};
             ObservableField<std::string> playerName{"CHARA"};
+            ObservableField<float> attackSpeed{1.5};
+            ObservableField<float> attackModifier{1.5};
         } playerStatistics;
         Inventory playerInventory;
     public:

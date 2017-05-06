@@ -18,3 +18,5 @@ void ug::State::enter(StateManager* newStateManager) {
     states = newStateManager;
     onEnter();
 }
+
+ug::State::~State() {}

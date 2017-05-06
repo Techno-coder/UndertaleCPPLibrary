@@ -11,6 +11,7 @@ namespace ug {
         void updateActiveButton();
     public:
         ActionSelectState(const std::shared_ptr<Encounter> &encounter);
+        virtual ~ActionSelectState();
 
         void onEnter() override;
 

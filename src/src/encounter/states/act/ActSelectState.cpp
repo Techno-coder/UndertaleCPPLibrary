@@ -33,6 +33,7 @@ void ug::ActSelectState::onKeyPressed(ug::Controls::Keys key) {
             }
             break;
         case Controls::Keys::CONFIRM:
+            audio.playSound(sounds.MENU_CONFIRM);
             //TODO
             break;
         case Controls::Keys::CANCEL:
@@ -83,3 +84,5 @@ void ug::ActSelectState::onEnter() {
     generateSprites();
     onKeyPressed(Controls::Keys::INVALID);
 }
+
+ug::ActSelectState::~ActSelectState() {}

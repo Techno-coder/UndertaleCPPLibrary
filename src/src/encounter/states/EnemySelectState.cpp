@@ -68,3 +68,5 @@ void ug::EnemySelectState::onEnter() {
     generateSprites();
     onKeyPressed(Controls::Keys::INVALID);
 }
+
+ug::EnemySelectState::~EnemySelectState() {}

@@ -21,6 +21,7 @@ namespace ug {
         virtual void goToNextState(std::vector<Enemy>::iterator selectedEnemy) = 0;
     public:
         EnemySelectState(const std::shared_ptr<Encounter> &encounter);
+        virtual ~EnemySelectState();
     };
 }
 

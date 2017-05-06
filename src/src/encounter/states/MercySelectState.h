@@ -16,6 +16,7 @@ namespace ug {
         void onDraw(sf::RenderWindow &window) override;
     public:
         MercySelectState(const std::shared_ptr<Encounter> &encounter);
+        virtual ~MercySelectState();
     };
 }
 

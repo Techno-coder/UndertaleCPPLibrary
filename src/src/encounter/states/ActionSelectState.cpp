@@ -76,3 +76,5 @@ void ug::ActionSelectState::updateActiveButton() {
         default: break;
     }
 }
+
+ug::ActionSelectState::~ActionSelectState() {}

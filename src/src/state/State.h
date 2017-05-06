@@ -48,6 +48,7 @@ namespace ug {
         virtual void onDraw(sf::RenderWindow &window) {};
     public:
         State();
+        virtual ~State();
     };
 }
 

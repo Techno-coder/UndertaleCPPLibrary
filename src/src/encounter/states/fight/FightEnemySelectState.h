@@ -16,6 +16,7 @@ namespace ug {
         void goToNextState(std::vector<Enemy>::iterator selectedEnemy) override;
     public:
         FightEnemySelectState(const std::shared_ptr<Encounter> &encounter);
+        virtual ~FightEnemySelectState();
     };
 }
 

@@ -1,4 +1,5 @@
 #include "FightEnemySelectState.h"
+#include "FightAttackState.h"
 
 ug::FightEnemySelectState::FightEnemySelectState(const std::shared_ptr<ug::Encounter> &encounter) :
         EnemySelectState(encounter) {
@@ -18,7 +19,9 @@ void ug::FightEnemySelectState::onDraw(sf::RenderWindow &window) {
 }
 
 void ug::FightEnemySelectState::goToNextState(std::vector<Enemy>::iterator selectedEnemy) {
-    //TODO
+    std::unique_ptr<ug::State> temp(new FightAttackState(encounter, selectedEnemy));
+    states->popState();
+    states->changeState(std::move(temp));
 }
 
 void ug::FightEnemySelectState::generateHealthBars() {
@@ -40,3 +43,5 @@ void ug::FightEnemySelectState::generateHealthBars() {
         ++currentIndex;
     }
 }
+
+ug::FightEnemySelectState::~FightEnemySelectState() {}

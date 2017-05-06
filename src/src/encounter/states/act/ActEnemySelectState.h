@@ -10,6 +10,7 @@ namespace ug {
 
     public:
         ActEnemySelectState(const std::shared_ptr<Encounter> &encounter);
+        virtual ~ActEnemySelectState();
     };
 }
 

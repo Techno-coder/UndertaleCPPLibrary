@@ -21,6 +21,7 @@ namespace ug {
         void onDraw(sf::RenderWindow &window) override;
     public:
         ActSelectState(const std::shared_ptr<Encounter> &encounter, std::vector<Enemy>::iterator enemyIterator);
+        virtual ~ActSelectState();
     };
 }
 

@@ -50,6 +50,7 @@ void ug::ItemSelectState::onKeyPressed(ug::Controls::Keys key) {
             }
             break;
         case Controls::Keys::CONFIRM:
+            audio.playSound(sounds.MENU_CONFIRM);
             //TODO
             break;
         case Controls::Keys::CANCEL:

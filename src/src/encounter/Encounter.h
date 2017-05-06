@@ -7,6 +7,8 @@
 namespace ug {
     class Encounter {
         std::vector<Enemy> enemies;
+
+        //TODO consider having variables here which determine the fight states; easy modifying of functionality
     public:
         void addEnemy(Enemy enemy);
         std::vector<Enemy>& getAllEnemies();

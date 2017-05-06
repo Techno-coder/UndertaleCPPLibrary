@@ -33,6 +33,9 @@ void ug::EncounterState::onDraw(sf::RenderWindow &window) {
     window.draw(privateSprites.playerHealthFraction);
     window.draw(privateSprites.maxHealthBar);
     window.draw(privateSprites.currentHealthBar);
+    for (auto &enemy : enemyCache) { //TODO potentially cache enemies; remember draw before dialogue box
+        window.draw(enemy.getSprite());
+    }
     window.draw(dialogueBox);
     window.draw(soul);
 }
@@ -40,6 +43,7 @@ void ug::EncounterState::onDraw(sf::RenderWindow &window) {
 ug::EncounterState::EncounterState(const std::shared_ptr<Encounter> &encounter) : encounter(encounter) {
     initializePrivateSprites();
     initializeObservers();
+    enemyCache = encounter->getAllEnemies();
 
     soul.setTexture(textures.SOUL);
     soul.setOrigin(soul.getGlobalBounds().width / 2, soul.getGlobalBounds().height / 2);
@@ -89,3 +93,5 @@ void ug::EncounterState::initializeObservers() {
     player.getStatistics().playerName.registerObserver(&playerStatisticsObservers.playerName(player.getStatistics().playerName));
     player.getStatistics().level.registerObserver(&playerStatisticsObservers.level(player.getStatistics().level));
 }
+
+ug::EncounterState::~EncounterState() {}
