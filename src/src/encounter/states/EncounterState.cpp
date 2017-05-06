@@ -94,4 +94,9 @@ void ug::EncounterState::initializeObservers() {
     player.getStatistics().level.registerObserver(&playerStatisticsObservers.level(player.getStatistics().level));
 }
 
-ug::EncounterState::~EncounterState() {}
+ug::EncounterState::~EncounterState() {
+    player.getStatistics().health.unregisterObserver(&playerStatisticsObservers.health(player.getStatistics().health));
+    player.getStatistics().maxHealth.unregisterObserver(&playerStatisticsObservers.maxHealth(player.getStatistics().maxHealth));
+    player.getStatistics().playerName.unregisterObserver(&playerStatisticsObservers.playerName(player.getStatistics().playerName));
+    player.getStatistics().level.unregisterObserver(&playerStatisticsObservers.level(player.getStatistics().level));
+}

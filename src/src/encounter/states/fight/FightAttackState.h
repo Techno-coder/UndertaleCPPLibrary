@@ -33,12 +33,20 @@ namespace ug {
 
         sf::Sprite slice{textures.SLICE_0};
 
+        sf::RectangleShape maxHealthRect;
+        sf::RectangleShape healthRect;
+        sf::Text damageText;
+
+        int damageDealt;
+
         int timerCounter = 0;
         int sliceCounter = 0;
         bool hit = false;
         std::vector<Enemy>::iterator enemy;
 
         void onKeyPress(Controls::Keys key);
+        void calculateDamageDealt();
+        float getRandomFloat(float min, float max);
     protected:
         void onEnter() override;
 

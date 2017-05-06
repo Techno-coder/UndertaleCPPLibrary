@@ -12,8 +12,8 @@ namespace ug {
             ObservableField<short> maxHealth{20};
             ObservableField<short> level{3};
             ObservableField<std::string> playerName{"CHARA"};
-            ObservableField<float> attackSpeed{1.5};
-            ObservableField<float> attackModifier{1.5};
+            ObservableField<float> weaponAttackSpeed{1.5};
+            ObservableField<float> attackModifier{0};
         } playerStatistics;
         Inventory playerInventory;
     public:

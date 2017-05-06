@@ -1,3 +1,4 @@
+#include <cmath>
 #include "FightAttackState.h"
 
 ug::FightAttackState::FightTextures ug::FightAttackState::textures;
@@ -15,7 +16,8 @@ ug::FightAttackState::FightAttackState(const std::shared_ptr<ug::Encounter> &enc
     positioner.setOutlineColor(sf::Color::White);
     soul.setPosition(-100, -100);
     slice.setOrigin(slice.getGlobalBounds().width / 2, slice.getGlobalBounds().height / 2);
-    slice.setPosition(enemy->getSprite().getPosition()); //TODO FIX Up
+    slice.setPosition(enemy->getSprite().getPosition().x + (enemy->getSprite().getGlobalBounds().width / 2),
+                      enemy->getSprite().getPosition().y + (enemy->getSprite().getGlobalBounds().height / 2)); //TODO FIX Up
 }
 
 void ug::FightAttackState::onDraw(sf::RenderWindow &window) {
@@ -33,6 +35,8 @@ void ug::FightAttackState::onKeyPress(ug::Controls::Keys key) {
             //TODO
             hit = true;
             audio.playSound(sounds.SLICE);
+            calculateDamageDealt();
+            enemy->getAttributes().health.setValue(enemy->getAttributes().health.getValue() - damageDealt);
             break;
 
         default:
@@ -45,7 +49,7 @@ void ug::FightAttackState::onEnter() {
 }
 
 void ug::FightAttackState::onUpdate() {
-    if(!hit) positioner.move(5 * player.getStatistics().attackSpeed, 0);
+    if(!hit) positioner.move(5 * player.getStatistics().weaponAttackSpeed, 0);
     else if(hit){
         if(timerCounter % 8 == 0) {
             if(positioner.getFillColor() == sf::Color::White) {
@@ -73,3 +77,16 @@ void ug::FightAttackState::onUpdate() {
 }
 
 ug::FightAttackState::~FightAttackState() {}
+
+void ug::FightAttackState::calculateDamageDealt() {
+    int distBetweenLineAndCenter = abs((int) fightBar.getPosition().x - (int) positioner.getPosition().x);
+    float b =  distBetweenLineAndCenter <= 12 ? 2.2f :
+               (1 - (distBetweenLineAndCenter / (fightBar.getGlobalBounds().width / 2))) * 2;
+    damageDealt = (int)((player.getStatistics().attackModifier + 10 - enemy->getAttributes().defense
+                         + getRandomFloat(0.0f, 2.0f)) * b);
+}
+
+float ug::FightAttackState::getRandomFloat(float min, float max) {
+    srand((unsigned int) time(nullptr));
+    return min + static_cast <float> (rand()) / (RAND_MAX / (max - min));
+}

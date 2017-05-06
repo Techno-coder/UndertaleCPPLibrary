@@ -17,7 +17,6 @@ class FieldObserver {
         return id;
     };
 
-    std::map<unsigned long, ObservableField<T>*> fields;
     friend ObservableField<T>;
 public:
     FieldObserver(const std::function<void(T, T)> &callback) : ID(nextID()++), callback(callback) {}
@@ -26,16 +25,10 @@ public:
         return *this;
     }
     FieldObserver& operator()(T newValue) { return operator()(T(), newValue); }
-    ~FieldObserver() {
-        for(auto field : fields) {
-            field.second->listeners.erase(ID);
-        }
-    }
 };
 
 template <typename T>
 class ObservableField {
-    const unsigned long ID;
     T internal;
 
     inline unsigned long& nextID() {
@@ -46,8 +39,8 @@ class ObservableField {
     std::map<unsigned long, FieldObserver<T>*> listeners;
     friend FieldObserver<T>;
 public:
-    ObservableField() : ID(nextID()++) {}
-    ObservableField(T value) : ID(nextID()++), internal(value) {}
+    ObservableField() {};
+    ObservableField(T value) : internal(value) {}
 
     T getValue() const {
         return internal;
@@ -70,11 +63,9 @@ public:
     }
 
     void registerObserver(FieldObserver<T> *const observer) {
-        observer->fields[ID] = this;
         listeners[observer->ID] = observer;
     };
     void unregisterObserver(FieldObserver<T> *const observer) {
-        observer->fields.erase(ID);
         listeners.erase(observer->ID);
     };
 };

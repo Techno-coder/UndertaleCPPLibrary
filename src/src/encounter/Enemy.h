@@ -6,6 +6,7 @@
 #include <string>
 #include "Projectile.h"
 #include "../state/State.h"
+#include "EnemyEventHandler.h"
 
 namespace ug {
     class Enemy;
@@ -36,14 +37,32 @@ namespace ug {
         struct Attributes {
             std::string name = "Default Enemy";
             bool spareable = false;
-            int health = 0;
-            int maxHealth = 0;
+            ObservableField<int> health{0};
+            ObservableField<int> maxHealth{0};
+            int defense = 0;
         } attributes;
 
         sf::Sprite sprite;
+
+        EnemyEventHandler eventHandler;
+
+        class Observers {
+            Enemy* const instance;
+        public:
+            FieldObserver<int> onDeath{[&](int oldValue, int newValue){
+                if(newValue <= 0) instance->eventHandler.onDeath(*instance);
+            }};
+
+            FieldObserver<int> onDamaged{[&](int oldValue, int newValue){
+                instance->eventHandler.onDamaged(*instance);
+            }};
+            Observers(Enemy *const instance);
+        } defaultObservers{this};
     public:
         Enemy(const ProjectileSpawner &projectileSpawner, sf::Sprite sprite, const unsigned long& ID);
         Enemy(const ProjectileSpawner &projectilesSpawner, sf::Sprite sprite);
+        Enemy(const ProjectileSpawner &projectilesSpawner, sf::Sprite sprite, EnemyEventHandler eventHandler);
+        virtual ~Enemy();
 
         /**
          * Creates a copy of this enemy instance
@@ -65,6 +84,9 @@ namespace ug {
          * @param sprite The sprite
          */
         sf::Sprite &getSprite();
+
+        void setEventHandler(const EnemyEventHandler &eventHandler);
+        void updateEvents();
     };
 }
 

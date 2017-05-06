@@ -26,7 +26,7 @@ void ug::FightEnemySelectState::goToNextState(std::vector<Enemy>::iterator selec
 
 void ug::FightEnemySelectState::generateHealthBars() {
     int currentIndex = 0;
-    for(auto enemy : enemyCache) {
+    for(auto &enemy : enemyCache) {
         sf::RectangleShape maxHealth(sf::Vector2f(100, 20));
         maxHealth.setFillColor(sf::Color::Red);
         maxHealth.setPosition(275, 277 + (currentIndex * 32));
