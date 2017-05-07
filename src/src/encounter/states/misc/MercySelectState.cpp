@@ -12,6 +12,7 @@ void ug::MercySelectState::onDraw(sf::RenderWindow &window) {
 }
 
 void ug::MercySelectState::onEnter() {
+    selectedOption = encounter->temporaryState.lastMercySelected;
     State::controls.setOnKeyPressedListener(std::bind(&MercySelectState::onKeyPress, this, std::placeholders::_1));
     generateSprites();
     onKeyPress(Controls::Keys::INVALID);
@@ -70,3 +71,7 @@ void ug::MercySelectState::generateSprites() {
 }
 
 ug::MercySelectState::~MercySelectState() {}
+
+void ug::MercySelectState::onExit() {
+    encounter->temporaryState.lastMercySelected = selectedOption;
+}

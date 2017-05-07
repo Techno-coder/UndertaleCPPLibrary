@@ -14,6 +14,9 @@
 #include <memory>
 
 namespace ug {
+    class Encounter;
+    class Enemy;
+
     class EncounterState : public State {
         class Fonts : FontsResources {
             const std::string PATH_PREFIX{"resources/default/encounter/"};
@@ -42,14 +45,12 @@ namespace ug {
             SoundsResourceItem MENU_MOVE{PATH_PREFIX + "menumove.wav", this};
         };
     protected:
-        std::shared_ptr<Encounter> encounter;
 
-        enum class ActiveButton{FIGHT, ACT, ITEM, MERCY, NONE} activeButton;
+        enum class ActiveButton{FIGHT, ACT, ITEM, MERCY, NONE};
         void setActiveButton(ActiveButton button);
 
         static Sounds sounds;
         sf::Sprite soul;
-        sf::RectangleShape dialogueBox;
         std::vector<ug::Enemy>& enemyCache;
 
         virtual void onDraw(sf::RenderWindow& window) override;
@@ -57,6 +58,8 @@ namespace ug {
         EncounterState(const std::shared_ptr<Encounter> &encounter);
         virtual ~EncounterState();
 
+        std::shared_ptr<Encounter> encounter;
+        sf::RectangleShape dialogueBox;
     private:
         static Textures textures;
         static Fonts fonts;
@@ -74,6 +77,8 @@ namespace ug {
             sf::RectangleShape maxHealthBar;
         } privateSprites;
 
+        ActiveButton activeButton;
+
         void initializePrivateSprites();
         void initializeObservers();
 
@@ -81,9 +86,7 @@ namespace ug {
             EncounterState*const instance;
             PrivateSprites*const sprites;
 
-            void updatePlayerHealthFraction() {
-                short health = instance->player.getStatistics().health;
-                short maxHealth = instance->player.getStatistics().maxHealth;
+            void updatePlayerHealthFraction(int health, int maxHealth) {
                 sprites->playerHealthFraction.setString((health < 10 ? "0" + std::to_string(health) :
                 std::to_string(health)) + " / " + (maxHealth < 10 ? "0" +
                 std::to_string(maxHealth) : std::to_string(maxHealth)));
@@ -95,12 +98,12 @@ namespace ug {
 
             FieldObserver<int> health{[&](short o, short n){
                 sprites->currentHealthBar.setSize({n * 1.5f, 20});
-                updatePlayerHealthFraction();
+                updatePlayerHealthFraction(n, player.getStatistics().maxHealth);
             }};
 
             FieldObserver<int> maxHealth{[&](short o, short n){
                 sprites->maxHealthBar.setSize({n * 1.5f, 20});
-                updatePlayerHealthFraction();
+                updatePlayerHealthFraction(player.getStatistics().health, n);
             }};
 
             FieldObserver<int> level{[&](short o, short n){

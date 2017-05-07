@@ -32,8 +32,6 @@ namespace ug {
 
         static GlobalFonts fonts;
 
-        StateManager* states;
-
         /**
          * Set your listeners and handlers here
          */
@@ -49,6 +47,8 @@ namespace ug {
     public:
         State();
         virtual ~State();
+
+        StateManager* states;
     };
 }
 

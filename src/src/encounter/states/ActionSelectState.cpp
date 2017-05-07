@@ -2,7 +2,7 @@
 #include "item/ItemSelectState.h"
 #include "fight/FightEnemySelectState.h"
 #include "act/ActEnemySelectState.h"
-#include "MercySelectState.h"
+#include "misc/MercySelectState.h"
 
 void ug::ActionSelectState::onDraw(sf::RenderWindow &window) {
     EncounterState::onDraw(window);

@@ -1,7 +1,7 @@
 #ifndef PROJECT_MERCYSELECTSTATE_H
 #define PROJECT_MERCYSELECTSTATE_H
 
-#include "EncounterState.h"
+#include "../EncounterState.h"
 
 namespace ug {
     class MercySelectState : public EncounterState {
@@ -12,6 +12,7 @@ namespace ug {
         void generateSprites();
     protected:
         void onEnter() override;
+        void onExit() override;
 
         void onDraw(sf::RenderWindow &window) override;
     public:

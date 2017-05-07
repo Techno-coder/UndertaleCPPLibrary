@@ -7,3 +7,5 @@ void ug::Encounter::addEnemy(Enemy enemy) {
 std::vector<ug::Enemy>& ug::Encounter::getAllEnemies() {
     return enemies;
 }
+
+ug::Encounter::Encounter() : eventHandler(new EncounterEventHandler) {}

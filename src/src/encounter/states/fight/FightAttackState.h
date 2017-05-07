@@ -35,20 +35,20 @@ namespace ug {
         static FightFonts fonts;
 
         sf::Sprite fightBar;
-        sf::RectangleShape positioner{sf::Vector2f(7, 122)};
+        sf::RectangleShape targetLine{sf::Vector2f(7, 122)};
 
         sf::Sprite slice{textures.SLICE_0};
-
         sf::RectangleShape maxHealthRect;
         sf::RectangleShape healthRect;
         sf::Text damageText{"", fonts.HACHICRO};
 
+        float initialHealthRectSize;
         int damageDealt;
+        std::vector<Enemy>::iterator enemy;
 
         int timerCounter = 0;
         int sliceCounter = 0;
         bool hit = false;
-        std::vector<Enemy>::iterator enemy;
 
         void onKeyPress(Controls::Keys key);
         void calculateDamageDealt();

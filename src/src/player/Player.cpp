@@ -9,8 +9,9 @@ ug::Inventory &ug::Player::getInventory() {
 }
 
 ug::Player::Player() {
-    Item testItem([](Player &player) {
-        printf("ITEM ONE!!!");
+    Item testItem([](Player &player, State &state) {
+        printf("POWOWOWOAODSO");
+        player.getStatistics().health.setValue(player.getStatistics().health.getValue() + 10);
     });
     playerInventory.addItem(testItem.clone());
     playerInventory.addItem(testItem.clone());

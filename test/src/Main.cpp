@@ -1,9 +1,25 @@
-#include <algorithm>
 #include "../../src/src/state/StateManager.h"
 #include "../../src/src/encounter/states/ActionSelectState.h"
+#include "../../src/src/encounter/states/defend/DefendArenaSizeTransitionState.h"
 
 class TestEnemyProjectileSpawner : public ug::ProjectileSpawner {
 public:
+
+};
+
+class EventHandlerThing : public ug::EncounterEventHandler {
+    int internalCounter = 0;
+public:
+    void onDefendBegin(ug::EncounterState &encounterState) override {
+        internalCounter = 0;
+    }
+
+    void onDefendUpdate(ug::EncounterState &encounterState) override {
+        internalCounter++;
+        if(internalCounter > 60) {
+            exitDefendState(encounterState);
+        }
+    }
 };
 
 int main() {
@@ -12,6 +28,8 @@ int main() {
     sf::Sprite test(tempFroggit);
 
     ug::Encounter encounter;
+    encounter.eventHandler.reset(new EventHandlerThing);
+
     ug::Enemy temp((TestEnemyProjectileSpawner()), test);
     temp.getAttributes().name = "Succ";
     ug::Act poo([](ug::State &state){});

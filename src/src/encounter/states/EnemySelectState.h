@@ -7,11 +7,11 @@ namespace ug {
     class EnemySelectState : public EncounterState {
         std::vector<sf::Text> generatedSprites;
 
+        void generateSprites();
+        void onKeyPressed(Controls::Keys key);
+    protected:
         int selectedOption = 0;
 
-        void onKeyPressed(Controls::Keys key);
-        void generateSprites();
-    protected:
         virtual void onEnter() override;
 
         virtual void onDraw(sf::RenderWindow &window) override;

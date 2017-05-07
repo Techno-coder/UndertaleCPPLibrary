@@ -1,4 +1,5 @@
 #include "ItemSelectState.h"
+#include "../defend/DefendState.h"
 
 void ug::ItemSelectState::onEnter() {
     itemCache = player.getInventory().getAllItems();
@@ -50,9 +51,15 @@ void ug::ItemSelectState::onKeyPressed(ug::Controls::Keys key) {
             }
             break;
         case Controls::Keys::CONFIRM:
+        {
             audio.playSound(sounds.MENU_CONFIRM);
-            //TODO
+            ug::Item item = itemCache[(optionsY * 2) + optionsX];
+            ug::Player& thePlayer = player;
+            ug::State& state = *this;
+            states->changeState(std::unique_ptr<ug::State>(new DefendState(encounter)));
+            item.execute(thePlayer, state);
             break;
+        }
         case Controls::Keys::CANCEL:
             states->popState();
             break;

@@ -54,7 +54,8 @@ ug::EncounterState::EncounterState(const std::shared_ptr<Encounter> &encounter) 
     dialogueBox.setOutlineColor(sf::Color::White);
     dialogueBox.setOutlineThickness(5);
     dialogueBox.setSize(sf::Vector2f(570, 130));
-    dialogueBox.setPosition(35, 255);
+    dialogueBox.setOrigin(dialogueBox.getSize().x / 2, dialogueBox.getSize().y);
+    dialogueBox.setPosition(320, 385);
 }
 
 void ug::EncounterState::initializePrivateSprites() {

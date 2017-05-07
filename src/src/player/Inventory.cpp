@@ -1,7 +1,7 @@
 #include <vector>
 #include "Inventory.h"
 
-static ug::Item EMPTY_ITEM([](ug::Player &player){});
+static ug::Item EMPTY_ITEM([](ug::Player &player, ug::State &state){});
 
 void ug::Inventory::addItem(const ug::Item &item) {
     items.emplace(item.getID(), item);

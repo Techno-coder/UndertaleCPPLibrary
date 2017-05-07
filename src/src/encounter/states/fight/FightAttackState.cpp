@@ -1,5 +1,6 @@
 #include <cmath>
 #include "FightAttackState.h"
+#include "../defend/DefendState.h"
 
 ug::FightAttackState::FightTextures ug::FightAttackState::textures;
 ug::FightAttackState::FightSounds ug::FightAttackState::sounds;
@@ -11,10 +12,10 @@ ug::FightAttackState::FightAttackState(const std::shared_ptr<ug::Encounter> &enc
     EncounterState::setActiveButton(ActiveButton::NONE);
     fightBar.setPosition(47, 263);
     fightBar.setTexture(textures.FIGHT_BAR);
-    positioner.setPosition(47, 259);
-    positioner.setFillColor(sf::Color::Black);
-    positioner.setOutlineThickness(3);
-    positioner.setOutlineColor(sf::Color::White);
+    targetLine.setPosition(47, 259);
+    targetLine.setFillColor(sf::Color::Black);
+    targetLine.setOutlineThickness(3);
+    targetLine.setOutlineColor(sf::Color::White);
     soul.setPosition(-100, -100);
     slice.setOrigin(slice.getGlobalBounds().width / 2, slice.getGlobalBounds().height / 2);
     slice.setPosition(enemy->getSprite().getPosition().x + (enemy->getSprite().getGlobalBounds().width / 2),
@@ -26,13 +27,14 @@ ug::FightAttackState::FightAttackState(const std::shared_ptr<ug::Encounter> &enc
     healthRect.setPosition(enemy->getSprite().getPosition().x, enemy->getSprite().getPosition().y - 20);
     healthRect.setSize(sf::Vector2f((enemy->getAttributes().health / (float) enemy->getAttributes().maxHealth) * maxHealthRect.getSize().x, 16));
     healthRect.setFillColor(sf::Color::Green);
+    initialHealthRectSize = healthRect.getSize().x;
     damageText.setFillColor(sf::Color::Red);
 }
 
 void ug::FightAttackState::onDraw(sf::RenderWindow &window) {
     EncounterState::onDraw(window);
     window.draw(fightBar);
-    window.draw(positioner);
+    window.draw(targetLine);
     if(hit) {
         if(sliceCounter <= 5) window.draw(slice);
         if(sliceCounter > 7) {
@@ -69,15 +71,15 @@ void ug::FightAttackState::onEnter() {
 }
 
 void ug::FightAttackState::onUpdate() {
-    if(!hit) positioner.move(5 * player.getStatistics().weaponAttackSpeed, 0);
+    if(!hit) targetLine.move(5 * player.getStatistics().weaponAttackSpeed, 0);
     else if(hit){
         if(timerCounter % 8 == 0) {
-            if(positioner.getFillColor() == sf::Color::White) {
-                positioner.setFillColor(sf::Color::Black);
-                positioner.setOutlineColor(sf::Color::White);
+            if(targetLine.getFillColor() == sf::Color::White) {
+                targetLine.setFillColor(sf::Color::Black);
+                targetLine.setOutlineColor(sf::Color::White);
             } else {
-                positioner.setFillColor(sf::Color::White);
-                positioner.setOutlineColor(sf::Color::Black);
+                targetLine.setFillColor(sf::Color::White);
+                targetLine.setOutlineColor(sf::Color::Black);
             }
         }
         if(timerCounter % 6 == 0) {
@@ -103,7 +105,7 @@ void ug::FightAttackState::onUpdate() {
         int maxEnemyHealth = enemy->getAttributes().maxHealth.getValue();
         int desiredHealthBarWidth = (int) ((enemyHealth / (float) maxEnemyHealth) * maxHealthRect.getSize().x);
         if(healthRect.getSize().x > desiredHealthBarWidth) {
-            healthRect.setSize(sf::Vector2f(healthRect.getSize().x - ((maxHealthRect.getSize().x - desiredHealthBarWidth) / 45.0f), 16));
+            healthRect.setSize(sf::Vector2f(healthRect.getSize().x - ((initialHealthRectSize - desiredHealthBarWidth) / 45.0f), 16));
         }
     }
 
@@ -116,13 +118,17 @@ void ug::FightAttackState::onUpdate() {
     } else if (sliceCounter >= 14 && sliceCounter <= 15) {
         damageText.move(0, 0.5f);
     }
+
+    if(sliceCounter >= 20) {
+        states->changeState(std::unique_ptr<ug::State>(new DefendState(encounter)));
+    }
 }
 
 ug::FightAttackState::~FightAttackState() {}
 
 void ug::FightAttackState::calculateDamageDealt() {
     int distFromCenter = abs((int) ((fightBar.getPosition().x + (fightBar.getGlobalBounds().width / 2))
-                                    - (positioner.getPosition().x + (positioner.getSize().x / 2))));
+                                    - (targetLine.getPosition().x + (targetLine.getSize().x / 2))));
     float b = distFromCenter <= 12 ? 2.2f : (1.0f - (distFromCenter / fightBar.getGlobalBounds().width)) * 2.0f;
     damageDealt = (int) (((float) player.getStatistics().attackModifier.getValue()
                           - (float) enemy->getAttributes().defense

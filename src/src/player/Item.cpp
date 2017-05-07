@@ -19,8 +19,8 @@ void ug::Item::setName(const std::string &name) {
     Item::name = name;
 }
 
-void ug::Item::execute(ug::Player &player) const {
-    action(player);
+void ug::Item::execute(ug::Player &player, ug::State& state) const {
+    action(player, state);
 }
 
 const unsigned long ug::Item::getID() const {

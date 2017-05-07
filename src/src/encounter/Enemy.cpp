@@ -22,7 +22,7 @@ ug::Enemy ug::Enemy::clone(sf::Vector2f position) const {
     return t;
 }
 
-const ug::ProjectileSpawner &ug::Enemy::getProjectileSpawner() const {
+ug::ProjectileSpawner &ug::Enemy::getProjectileSpawner() {
     return projectileSpawner;
 }
 
@@ -49,6 +49,7 @@ void ug::Enemy::setEventHandler(const ug::EnemyEventHandler &eventHandler) {
 
 void ug::Enemy::updateEvents() {
     eventHandler.onUpdate(*this);
+    projectileSpawner.onUpdate();
 }
 
 ug::Enemy::~Enemy() {
@@ -65,7 +66,7 @@ void ug::Act::setName(const std::string &name) {
 
 ug::Act::Act(ug::ActFunction action) : onAct(action), ID(nextID++) {}
 
-void ug::Act::execute(ug::State &state) {
+void ug::Act::execute(ug::EncounterState &state) {
     onAct(state);
 }
 

@@ -5,12 +5,14 @@
 #include <SFML/Graphics/Sprite.hpp>
 #include <string>
 #include "Projectile.h"
-#include "../state/State.h"
+#include "states/EncounterState.h"
 #include "EnemyEventHandler.h"
 
 namespace ug {
+    class EncounterState;
+
     class Enemy;
-    typedef std::function<void(State &state)> ActFunction;
+    typedef std::function<void(EncounterState &state)> ActFunction;
 
     class Act {
         static unsigned long nextID;
@@ -20,14 +22,14 @@ namespace ug {
         ActFunction onAct;
     public:
         Act(ActFunction action);
-        void execute(State &state);
+        void execute(EncounterState &state);
 
         const std::string &getName() const;
         void setName(const std::string &name);
     };
 
     class Enemy {
-        const ProjectileSpawner projectileSpawner;
+        ProjectileSpawner projectileSpawner;
         std::vector<Act> acts;
 
         static unsigned long nextID;
@@ -73,7 +75,7 @@ namespace ug {
          */
         Enemy clone(sf::Vector2f position) const;
 
-        const ProjectileSpawner &getProjectileSpawner() const;
+        ProjectileSpawner &getProjectileSpawner();
 
         std::vector<Act>& getActs();
         Attributes &getAttributes();

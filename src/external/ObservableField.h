@@ -31,11 +31,6 @@ template <typename T>
 class ObservableField {
     T internal;
 
-    inline unsigned long& nextID() {
-        static unsigned long id = 0;
-        return id;
-    };
-
     std::map<unsigned long, FieldObserver<T>*> listeners;
     friend FieldObserver<T>;
 public:
@@ -45,7 +40,7 @@ public:
     T getValue() const {
         return internal;
     };
-    void setValue(const T &value, bool triggerListeners) {
+    void setValue(const T &value, bool triggerListeners = true) {
         if(triggerListeners) {
             for(auto mapValue : listeners) {
                 mapValue.second->callback(internal, value);
@@ -53,7 +48,6 @@ public:
         }
         internal = value;
     }
-    void setValue(const T &value) { setValue(value, true); }
 
     void operator=(const T &value) {
         setValue(value);

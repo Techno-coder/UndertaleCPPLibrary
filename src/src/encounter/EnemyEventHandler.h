@@ -8,8 +8,22 @@ namespace ug {
 
     class EnemyEventHandler {
     public:
+        /**
+         * Called when the enemy is damaged
+         * @param enemy The enemy
+         */
         void onDamaged(Enemy &enemy) {};
+
+        /**
+         * Called when the enemy dies
+         * @param enemy The enemy
+         */
         void onDeath(Enemy &enemy) {};
+
+        /**
+         * Called every 60th of a second
+         * @param enemy
+         */
         void onUpdate(Enemy &enemy) {};
     };
 }

@@ -8,12 +8,12 @@ namespace ug {
     class Projectile;
 
     class ProjectileInstance {
-        ProjectileInstance(const Projectile &projectile);
+        ProjectileInstance(Projectile &projectile);
         friend Projectile;
 
-        const Projectile& projectile;
+        Projectile* projectile;
     public:
-        Projectile const& getProjectile();
+        Projectile& getProjectile();
     };
 
     class Projectile {
@@ -24,10 +24,24 @@ namespace ug {
          */
         sf::Sprite sprite;
     public:
+
+        /**
+         * Called when the projectile collides with the players soul
+         */
         virtual void onCollide() = 0; //TODO input some variables here? maybe? IDK possibly input a projectile instance
+
+        /**
+         * Called every 60th of a second
+         * @param projectile The projectile instance
+         */
         virtual void onUpdate(ProjectileInstance& projectile) = 0; //TODO ditto
 
-        const sf::Sprite &getSprite() const;
+        sf::Sprite &getSprite();
+
+        /**
+         * Creates a projectile instance from this projectile
+         * @return A projectile instance
+         */
         ProjectileInstance createInstance();
     };
 
@@ -35,6 +49,7 @@ namespace ug {
     public:
         virtual std::vector<ProjectileInstance> getInitialProjectiles();
         virtual std::vector<ProjectileInstance> getNewProjectiles();
+        virtual void onUpdate();
     };
 }
 

@@ -1,4 +1,5 @@
 #include "ActSelectState.h"
+#include "../defend/DefendState.h"
 
 ug::ActSelectState::ActSelectState(const std::shared_ptr<ug::Encounter> &encounter,
                                    std::vector<ug::Enemy>::iterator enemyIterator) :
@@ -33,15 +34,24 @@ void ug::ActSelectState::onKeyPressed(ug::Controls::Keys key) {
             }
             break;
         case Controls::Keys::CONFIRM:
+        {
             audio.playSound(sounds.MENU_CONFIRM);
             //TODO
+            ug::Act act = (*actCache)[(optionsY * 2) + optionsX];
+            ug::Player& thePlayer = player;
+            ug::State& state = *this;
+            states->popState();
+            states->changeState(std::unique_ptr<ug::State>(new DefendState(encounter)));
+            act.execute(*this);
             break;
+        }
         case Controls::Keys::CANCEL:
             states->popState();
             break;
         default:
             break;
     }
+    encounter->temporaryState.lastActSelected = (optionsY * 2) + optionsX;
     soul.setPosition(73 + (optionsX * 260), 286 + (optionsY * 32));
 }
 
@@ -80,6 +90,8 @@ void ug::ActSelectState::onEnter() {
         return;
     }
 
+    optionsX = encounter->temporaryState.lastActSelected % 2;
+    optionsY = encounter->temporaryState.lastActSelected / 2;
     State::controls.setOnKeyPressedListener(std::bind(&ActSelectState::onKeyPressed, this, std::placeholders::_1));
     generateSprites();
     onKeyPressed(Controls::Keys::INVALID);

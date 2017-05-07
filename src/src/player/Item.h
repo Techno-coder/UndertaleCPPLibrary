@@ -7,8 +7,9 @@
 namespace ug {
     class Player;
     class Inventory;
+    class State;
 
-    typedef std::function<void(Player &player)> ItemAction;
+    typedef std::function<void(Player &player, State &state)> ItemAction;
 
     class Item {
         const ItemAction action;
@@ -25,7 +26,7 @@ namespace ug {
         operator unsigned long() const;
         const unsigned long getID() const;
 
-        void execute(Player &player) const;
+        void execute(Player &player, State &state) const;
 
         const std::string &getName() const;
         void setName(const std::string &name);

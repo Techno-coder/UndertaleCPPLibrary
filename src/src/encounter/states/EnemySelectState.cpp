@@ -55,6 +55,7 @@ void ug::EnemySelectState::onKeyPressed(ug::Controls::Keys key) {
             break;
     }
     soul.setPosition(73, (286 + (selectedOption * 32)));
+    encounter->temporaryState.lastEnemySelected = selectedOption;
 }
 
 void ug::EnemySelectState::onEnter() {
@@ -63,6 +64,7 @@ void ug::EnemySelectState::onEnter() {
         return;
     }
 
+    selectedOption = encounter->temporaryState.lastEnemySelected;
     controls.setOnKeyPressedListener(std::bind(&EnemySelectState::onKeyPressed, this, std::placeholders::_1));
     generateSprites();
     onKeyPressed(Controls::Keys::INVALID);
