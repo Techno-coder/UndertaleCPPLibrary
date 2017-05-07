@@ -4,9 +4,9 @@
 #include <functional>
 #include <SFML/Graphics/Sprite.hpp>
 #include <string>
-#include "Projectile.h"
 #include "states/EncounterState.h"
 #include "EnemyEventHandler.h"
+#include "Projectile.h"
 
 namespace ug {
     class EncounterState;
@@ -61,9 +61,9 @@ namespace ug {
             Observers(Enemy *const instance);
         } defaultObservers{this};
     public:
-        Enemy(const ProjectileSpawner &projectileSpawner, sf::Sprite sprite, const unsigned long& ID);
-        Enemy(const ProjectileSpawner &projectilesSpawner, sf::Sprite sprite);
-        Enemy(const ProjectileSpawner &projectilesSpawner, sf::Sprite sprite, EnemyEventHandler eventHandler);
+        Enemy(ProjectileSpawner projectileSpawner, sf::Sprite sprite, const unsigned long& ID);
+        Enemy(ProjectileSpawner projectilesSpawner, sf::Sprite sprite);
+        Enemy(ProjectileSpawner projectilesSpawner, sf::Sprite sprite, EnemyEventHandler eventHandler);
         virtual ~Enemy();
 
         /**
@@ -76,6 +76,7 @@ namespace ug {
         Enemy clone(sf::Vector2f position) const;
 
         ProjectileSpawner &getProjectileSpawner();
+        void setProjectileSpawner(const ProjectileSpawner &projectileSpawner);
 
         std::vector<Act>& getActs();
         Attributes &getAttributes();

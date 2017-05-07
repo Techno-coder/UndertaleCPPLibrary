@@ -5,11 +5,12 @@
 
 namespace ug {
     class DefendState : public EncounterState {
-        std::vector<ProjectileInstance> currentProjectiles;
+        std::vector<Projectile> currentProjectiles;
 
         bool alreadyEntered = false;
         void handleEvents();
         void collideableMoveSoul(float x, float y);
+        void addProjectile(Projectile &projectile);
     protected:
         virtual void onEnter() override;
         virtual void onExit() override;

@@ -3,53 +3,52 @@
 
 #include <SFML/Graphics/Sprite.hpp>
 #include <vector>
+#include <functional>
 
 namespace ug {
+    class EncounterState;
     class Projectile;
 
-    class ProjectileInstance {
-        ProjectileInstance(Projectile &projectile);
-        friend Projectile;
-
-        Projectile* projectile;
-    public:
-        Projectile& getProjectile();
-    };
+    typedef std::function<void(ug::EncounterState &state, Projectile& projectile)> ProjectileEventHandler;
 
     class Projectile {
     protected:
-
-        /**
-         * @warning The position of the sprite should be relative to the bullet board not to the screen
-         */
         sf::Sprite sprite;
-    public:
 
+        ProjectileEventHandler onCollide = [](ug::EncounterState &state, Projectile& projectile){};
+        ProjectileEventHandler onUpdate = [](ug::EncounterState &state, Projectile& projectile){};
+    public:
         /**
          * Called when the projectile collides with the players soul
+         * @return A modifiable reference to the event handler
          */
-        virtual void onCollide() = 0; //TODO input some variables here? maybe? IDK possibly input a projectile instance
+        void collide(ug::EncounterState &state);
+        void setOnCollide(const ProjectileEventHandler &onCollide);
 
         /**
          * Called every 60th of a second
-         * @param projectile The projectile instance
+         * @return A modifiable reference to the event handler
          */
-        virtual void onUpdate(ProjectileInstance& projectile) = 0; //TODO ditto
-
-        sf::Sprite &getSprite();
+        void update(ug::EncounterState &state); //TODO ditto
+        void setOnUpdate(const ProjectileEventHandler &onUpdate);
 
         /**
-         * Creates a projectile instance from this projectile
-         * @return A projectile instance
+         * @warning The position of the sprite should be relative to the center of the bullet board not to the screen
          */
-        ProjectileInstance createInstance();
+        sf::Sprite& getSprite();
+
+        /**
+         * Creates a projectile from the projectile specified
+         * @return A projectile
+         */
+        static Projectile clone(Projectile toBeCloned);
     };
 
     class ProjectileSpawner {
     public:
-        virtual std::vector<ProjectileInstance> getInitialProjectiles();
-        virtual std::vector<ProjectileInstance> getNewProjectiles();
-        virtual void onUpdate();
+        std::function<std::vector<Projectile>()> getInitialProjectiles = [](){ return std::vector<Projectile>(); };
+        std::function<std::vector<Projectile>()> getNewProjectiles = [](){ return std::vector<Projectile>(); };
+        std::function<void()> onUpdate = [](){ return std::vector<Projectile>(); };
     };
 }
 

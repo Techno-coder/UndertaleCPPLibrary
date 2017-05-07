@@ -3,12 +3,12 @@
 unsigned long ug::Enemy::nextID = 0;
 unsigned long ug::Act::nextID = 0;
 
-ug::Enemy::Enemy(const ug::ProjectileSpawner &projectileSpawner, sf::Sprite sprite, const unsigned long &ID) :
+ug::Enemy::Enemy(ug::ProjectileSpawner projectileSpawner, sf::Sprite sprite, const unsigned long &ID) :
         projectileSpawner(projectileSpawner), ID(ID), sprite(sprite) {
     attributes.health.registerObserver(&defaultObservers.onDeath);
     attributes.health.registerObserver(&defaultObservers.onDamaged);
 }
-ug::Enemy::Enemy(const ug::ProjectileSpawner &projectileSpawner, sf::Sprite sprite) : Enemy(projectileSpawner, sprite, nextID++) {}
+ug::Enemy::Enemy(ug::ProjectileSpawner projectileSpawner, sf::Sprite sprite) : Enemy(projectileSpawner, sprite, nextID++) {}
 
 ug::Enemy ug::Enemy::clone(sf::Vector2f position) const {
     Enemy t(projectileSpawner, sprite, ID);
@@ -38,7 +38,7 @@ sf::Sprite &ug::Enemy::getSprite() {
     return sprite;
 }
 
-ug::Enemy::Enemy(const ug::ProjectileSpawner &projectilesSpawner, sf::Sprite sprite,
+ug::Enemy::Enemy(ug::ProjectileSpawner projectilesSpawner, sf::Sprite sprite,
                  ug::EnemyEventHandler eventHandler) : Enemy(projectilesSpawner, sprite) {
     Enemy::eventHandler = eventHandler;
 }
@@ -55,6 +55,10 @@ void ug::Enemy::updateEvents() {
 ug::Enemy::~Enemy() {
     attributes.health.unregisterObserver(&defaultObservers.onDeath);
     attributes.health.unregisterObserver(&defaultObservers.onDamaged);
+}
+
+void ug::Enemy::setProjectileSpawner(const ug::ProjectileSpawner &projectileSpawner) {
+    Enemy::projectileSpawner = projectileSpawner;
 }
 
 const std::string &ug::Act::getName() const {

@@ -1,5 +1,5 @@
-#ifndef PROJECT_IENCOUNTER_H
-#define PROJECT_IENCOUNTER_H
+#ifndef PROJECT_ENCOUNTER_H
+#define PROJECT_ENCOUNTER_H
 
 #include <vector>
 #include "Enemy.h"
@@ -33,4 +33,4 @@ namespace ug {
     };
 }
 
-#endif //PROJECT_IENCOUNTER_H
+#endif //PROJECT_ENCOUNTER_H

@@ -1,22 +1,25 @@
 #include "Projectile.h"
 
-ug::ProjectileInstance::ProjectileInstance(ug::Projectile &projectile) : projectile(&projectile) {}
-ug::ProjectileInstance ug::Projectile::createInstance() {
-    return ProjectileInstance(*this);
-}
-
-ug::Projectile& ug::ProjectileInstance::getProjectile() {
-    return *projectile;
-}
 sf::Sprite &ug::Projectile::getSprite() {
     return sprite;
 }
 
-std::vector<ug::ProjectileInstance> ug::ProjectileSpawner::getInitialProjectiles() {
-    return std::vector<ug::ProjectileInstance>();
-}
-std::vector<ug::ProjectileInstance> ug::ProjectileSpawner::getNewProjectiles() {
-    return std::vector<ug::ProjectileInstance>();
+ug::Projectile ug::Projectile::clone(Projectile toBeCloned) {
+    return toBeCloned;
 }
 
-void ug::ProjectileSpawner::onUpdate() {}
+void ug::Projectile::collide(ug::EncounterState &state) {
+    onCollide(state, *this);
+}
+
+void ug::Projectile::update(ug::EncounterState &state) {
+    onUpdate(state, *this);
+}
+
+void ug::Projectile::setOnCollide(const ug::ProjectileEventHandler &onCollide) {
+    Projectile::onCollide = onCollide;
+}
+
+void ug::Projectile::setOnUpdate(const ug::ProjectileEventHandler &onUpdate) {
+    Projectile::onUpdate = onUpdate;
+}
