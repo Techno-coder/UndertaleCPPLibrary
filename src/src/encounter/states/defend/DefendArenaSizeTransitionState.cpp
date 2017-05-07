@@ -19,12 +19,11 @@ void ug::DefendArenaSizeTransitionState::onUpdate() {
     encounterSize.y += yChange;
     dialogueBox.setSize(encounterSize);
     dialogueBox.setOrigin(dialogueBox.getSize().x / 2, dialogueBox.getSize().y);
-    soul.move(0, -yChange / 2);
 }
 
 void ug::DefendArenaSizeTransitionState::onEnter() {
-    EncounterState::soul.setPosition(dialogueBox.getPosition().x,
-                                     dialogueBox.getPosition().y - (dialogueBox.getSize().y / 2));
+    EncounterState::soul.setPosition(-100, -100);
+
     sf::Vector2f encounterSize = dialogueBox.getSize();
     float xDiff = desiredSize.x - encounterSize.x;
     xChange = xDiff / 30.0f;

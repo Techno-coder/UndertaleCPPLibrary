@@ -39,5 +39,18 @@ void ug::DefendState::onExit() {
 }
 
 void ug::DefendState::handleEvents() {
-    //TODO
+    if(State::controls.isKeyPressed(Controls::Keys::UP)) collideableMoveSoul(0, player.getStatistics().soulMoveSpeed * -1);
+    if(State::controls.isKeyPressed(Controls::Keys::DOWN)) collideableMoveSoul(0, player.getStatistics().soulMoveSpeed * 1);
+    if(State::controls.isKeyPressed(Controls::Keys::LEFT)) collideableMoveSoul(-1 * player.getStatistics().soulMoveSpeed, 0);
+    if(State::controls.isKeyPressed(Controls::Keys::RIGHT)) collideableMoveSoul(1 * player.getStatistics().soulMoveSpeed, 0);
+}
+
+void ug::DefendState::collideableMoveSoul(float x, float y) {
+    soul.move(x, y);
+    if(soul.getPosition().x < dialogueBox.getGlobalBounds().left + 13
+       || soul.getPosition().x > dialogueBox.getGlobalBounds().left + dialogueBox.getGlobalBounds().width - 13
+       || soul.getPosition().y < dialogueBox.getGlobalBounds().top + 13
+       || soul.getPosition().y > dialogueBox.getGlobalBounds().top + dialogueBox.getGlobalBounds().height - 13) {
+        soul.move(-x, -y);
+    }
 }

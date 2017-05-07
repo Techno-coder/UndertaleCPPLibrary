@@ -9,6 +9,7 @@ namespace ug {
 
         bool alreadyEntered = false;
         void handleEvents();
+        void collideableMoveSoul(float x, float y);
     protected:
         virtual void onEnter() override;
         virtual void onExit() override;

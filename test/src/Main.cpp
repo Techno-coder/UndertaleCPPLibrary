@@ -16,7 +16,7 @@ public:
 
     void onDefendUpdate(ug::EncounterState &encounterState) override {
         internalCounter++;
-        if(internalCounter > 60) {
+        if(internalCounter > 300) {
             exitDefendState(encounterState);
         }
     }

@@ -14,6 +14,7 @@ namespace ug {
             ObservableField<std::string> playerName{"CHARA"};
             ObservableField<float> weaponAttackSpeed{1.5};
             ObservableField<int> attackModifier{10};
+            ObservableField<float> soulMoveSpeed{1.0};
         } playerStatistics;
         Inventory playerInventory;
     public:
