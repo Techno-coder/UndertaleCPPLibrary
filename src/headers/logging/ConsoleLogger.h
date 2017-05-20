@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include "Logger.h"
 
 namespace ucl {

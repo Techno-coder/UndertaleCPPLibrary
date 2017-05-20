@@ -1,6 +1,7 @@
 #include <audio/SimpleAudio.h>
 
 #include <SFML/Audio/Sound.hpp>
+#include <vector>
 
 struct ucl::SimpleAudio::Impl {
 	std::vector<std::unique_ptr<sf::Sound>> currentSounds;

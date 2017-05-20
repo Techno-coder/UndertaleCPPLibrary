@@ -4,25 +4,10 @@
 
 namespace ucl {
 	enum class LogSeverity {
-		/**
-		 * Used to provide more information about the running of the program
-		 */
-				DEBUG,
-
-		/**
-		 * General information about the running of the program
-		 */
-				INFO,
-
-		/**
-		 * A problem that indicates a potential mistake in the code
-		 */
-				WARNING,
-
-		/**
-		 * A problem that is likely to cause the program to crash
-		 */
-				FATAL
+		DEBUG, /**< Used to provide more information about the running of the program */
+		INFO, /**< General information about the running of the program */
+		WARNING, /**< A problem that indicates a potential mistake in the code */
+		FATAL /**< A problem that is likely to cause the program to crash */
 	};
 
 	class Logger {

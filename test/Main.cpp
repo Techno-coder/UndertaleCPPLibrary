@@ -1,4 +1,5 @@
 #include <iostream>
+#include <SFML/Audio/SoundBuffer.hpp>
 #include <audio/Audio.h>
 #include <locator/AudioLocator.h>
 

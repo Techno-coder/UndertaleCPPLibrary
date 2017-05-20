@@ -1,6 +1,8 @@
 #pragma once
 
-#include <SFML/Audio/SoundBuffer.hpp>
+namespace sf {
+	class SoundBuffer;
+}
 
 namespace ucl {
 	class Audio {
