@@ -15,7 +15,7 @@ struct ug::FightBar::Impl {
 
 	typedef bool isMoving;
 	std::vector<std::pair<sf::RectangleShape, isMoving>> targetLines;
-	unsigned long nextNotMovingLine;
+	int nextNotMovingLine;
 
 	Impl(unsigned int numTargetLines) {
 		if (!texture) {
@@ -30,12 +30,13 @@ struct ug::FightBar::Impl {
 			targetLines[i].first.setFillColor(sf::Color::Black);
 			targetLines[i].first.setOutlineThickness(3);
 			targetLines[i].first.setOutlineColor(sf::Color::White);
-			targetLines[i].first.setPosition(0, 0);
 		}
 
 		nextNotMovingLine = numTargetLines - 1;
 	}
 };
+
+std::unique_ptr<sf::Texture> ug::FightBar::Impl::texture;
 
 void ug::FightBar::draw(sf::RenderTarget& target) {
 	target.draw(impl->barSprite);
@@ -52,8 +53,13 @@ void ug::FightBar::setTopLeftPosition(float x, float y) {
 	impl->barSprite.setPosition(x, y);
 }
 
-ug::FightBar::FightBar(unsigned int numTargetLines, float distBetweenLines) : impl(
-		std::make_unique<Impl>(numTargetLines)) {}
+ug::FightBar::FightBar(unsigned int numTargetLines, bool linesStartOnLeft) : impl(
+		std::make_unique<Impl>(numTargetLines)) {
+	for (auto& pair : impl->targetLines) {
+		pair.first.setPosition(
+				linesStartOnLeft ? 0 : impl->barSprite.getPosition().x + impl->barSprite.getGlobalBounds().width, 0);
+	}
+}
 
 float ug::FightBar::hit(bool removeLastTargetLine) {
 	if (!impl->targetLines.empty()) {
@@ -64,28 +70,33 @@ float ug::FightBar::hit(bool removeLastTargetLine) {
 		if (removeLastTargetLine) {
 			impl->targetLines.pop_back();
 			if (impl->targetLines.size() <= impl->nextNotMovingLine) {
-				impl->nextNotMovingLine = impl->targetLines.size() - 1;
+				impl->nextNotMovingLine = (int) (impl->targetLines.size() - 1);
 			}
 		}
 		return returnValue;
 	}
-	LoggerLocator::get().log(LogSeverity::WARNING, "FightBar hit function called but no more target lines left");
-	return 0.0f;
+	return std::numeric_limits<float>::quiet_NaN();
 }
 
 void ug::FightBar::update(float attackSpeed) {
 	for (auto& pair : impl->targetLines) {
 		if (pair.second) {
 			pair.first.move(5 * attackSpeed, 0);
+			if (pair.first.getPosition().x >
+			    impl->barSprite.getPosition().x + impl->barSprite.getGlobalBounds().width) {
+				impl->targetLines.pop_back();
+			}
 		}
 	}
 }
 
 void ug::FightBar::startNextTargetLine() {
-	if (startNextTargetLine && impl->nextNotMovingLine >= 0) {
+	if (impl->nextNotMovingLine >= 0) {
 		impl->targetLines[impl->nextNotMovingLine--].second = true;
 		return;
 	}
 	LoggerLocator::get().log(LogSeverity::WARNING,
 	                         "FightBar startNextTargetLine called but no more non moving target lines left");
 }
+
+ug::FightBar::~FightBar() {}

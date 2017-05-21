@@ -11,17 +11,24 @@ namespace ug {
 		struct Impl;
 		std::unique_ptr<Impl> impl;
 	public:
-		FightBar(unsigned int numTargetLines, float distBetweenLines);
+		/**
+		 * @param numTargetLines
+		 * @param distBetweenLines
+		 * @param linesStartOnLeft
+		 */
+		FightBar(unsigned int numTargetLines, bool linesStartOnLeft);
+		virtual ~FightBar();
+
 		void draw(sf::RenderTarget& target);
 		/**
 		 * Updates the fight bar
-		 * @param attackSpeed Affects speed of target lines
+		 * @param attackSpeed Affects speed of target lines, negative values causes lines to move backwards
 		 */
 		void update(float attackSpeed);
 		/**
 		 * Hits the fight bar
 		 * @param removeLastTargetLine Removes the rightmost target line if true
-		 * @return The distance from the center of the bar
+		 * @return The distance from the center of the bar or NaN if there are no more target lines
 		 */
 		float hit(bool removeLastTargetLine);
 		/**

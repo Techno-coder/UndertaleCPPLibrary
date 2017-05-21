@@ -1,8 +1,8 @@
 #include <locator/StatesLocator.h>
-#include <state/SimpleStateManager.h>
+#include <state/StateManager.h>
 
 template <>
-std::unique_ptr<ug::StateManager> ug::StatesLocator::object{new SimpleStateManager()};
+std::unique_ptr<ug::StateManager> ug::StatesLocator::object{new StateManager()};
 
 template <>
 ug::StateManager& ug::StatesLocator::get() {
