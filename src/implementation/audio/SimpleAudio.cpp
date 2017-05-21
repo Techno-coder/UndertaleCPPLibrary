@@ -3,7 +3,7 @@
 #include <SFML/Audio/Sound.hpp>
 #include <vector>
 
-struct ucl::SimpleAudio::Impl {
+struct ug::SimpleAudio::Impl {
 	std::vector<std::unique_ptr<sf::Sound>> currentSounds;
 
 	void cleanExpiredSounds() {
@@ -17,7 +17,7 @@ struct ucl::SimpleAudio::Impl {
 	}
 };
 
-void ucl::SimpleAudio::playSound(const sf::SoundBuffer& buffer) {
+void ug::SimpleAudio::playSound(const sf::SoundBuffer& buffer) {
 	std::unique_ptr<sf::Sound> sound(new sf::Sound());
 	sound->setBuffer(buffer);
 	sound->play();
@@ -25,4 +25,4 @@ void ucl::SimpleAudio::playSound(const sf::SoundBuffer& buffer) {
 	impl->cleanExpiredSounds();
 }
 
-ucl::SimpleAudio::SimpleAudio() : impl{std::make_unique<Impl>()} {}
+ug::SimpleAudio::SimpleAudio() : impl{std::make_unique<Impl>()} {}

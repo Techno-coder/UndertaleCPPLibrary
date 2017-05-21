@@ -8,7 +8,7 @@ namespace sf {
 	class RenderTarget;
 }
 
-namespace ucl {
+namespace ug {
 	class State;
 
 	class StateManager {

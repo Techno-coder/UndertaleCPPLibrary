@@ -2,10 +2,10 @@
 #include <logging/ConsoleLogger.h>
 
 template <>
-std::unique_ptr<ucl::Logger> ucl::LoggerLocator::object{new ucl::ConsoleLogger()};
+std::unique_ptr<ug::Logger> ug::LoggerLocator::object{new ug::ConsoleLogger()};
 
 template <>
-ucl::Logger& ucl::LoggerLocator::get() {
+ug::Logger& ug::LoggerLocator::get() {
 	if (!object) throw NoServiceProvidedException("LOGGER");
 	return *object;
 }

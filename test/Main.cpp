@@ -7,6 +7,6 @@ int main() {
 	sf::SoundBuffer buffer;
 	buffer.loadFromFile("resources/default/encounter/fight/soundSlice.wav");
 
-	auto& existingAudio = ucl::AudioLocator::get();
-	ucl::AudioLocator::get().playSound(buffer);
+	auto& existingAudio = ug::AudioLocator::get();
+	ug::AudioLocator::get().playSound(buffer);
 }

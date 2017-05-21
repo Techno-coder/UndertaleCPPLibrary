@@ -3,7 +3,7 @@
 #include <memory>
 #include "Logger.h"
 
-namespace ucl {
+namespace ug {
 	class ConsoleLogger : public Logger {
 		struct Impl;
 		std::unique_ptr<Impl> impl;

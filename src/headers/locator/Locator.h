@@ -3,7 +3,7 @@
 #include <memory>
 #include <string>
 
-namespace ucl {
+namespace ug {
 	class NoServiceProvidedException : public std::exception {
 		const std::string serviceName;
 	public:
@@ -35,5 +35,5 @@ namespace ucl {
 	};
 
 	template <typename T>
-	std::unique_ptr<T> ucl::Locator<T>::object;
+	std::unique_ptr<T> ug::Locator<T>::object;
 }

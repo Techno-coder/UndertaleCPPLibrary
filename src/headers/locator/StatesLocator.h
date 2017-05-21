@@ -2,12 +2,12 @@
 
 #include "Locator.h"
 
-namespace ucl {
+namespace ug {
 	class StateManager;
 
-	typedef ucl::Locator<ucl::StateManager> StatesLocator;
+	typedef ug::Locator<ug::StateManager> StatesLocator;
 
 	template <>
-	ucl::StateManager& ucl::StatesLocator::get();
+	ug::StateManager& ug::StatesLocator::get();
 
 }

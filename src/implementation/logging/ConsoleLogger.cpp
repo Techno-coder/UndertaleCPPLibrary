@@ -4,7 +4,7 @@
 #include <iostream>
 #include <SFML/System/Clock.hpp>
 
-struct ucl::ConsoleLogger::Impl {
+struct ug::ConsoleLogger::Impl {
 	sf::Clock clock;
 
 	Impl() {
@@ -12,7 +12,7 @@ struct ucl::ConsoleLogger::Impl {
 	}
 };
 
-void ucl::ConsoleLogger::log(const ucl::LogSeverity& severity, const std::string& message) {
+void ug::ConsoleLogger::log(const ug::LogSeverity& severity, const std::string& message) {
 	std::stringstream output;
 	output << "[" << std::to_string((int) impl->clock.getElapsedTime().asSeconds() / 60) << "m:"
 	       << std::to_string((int) impl->clock.getElapsedTime().asSeconds() % 60) << "s]";
@@ -34,4 +34,4 @@ void ucl::ConsoleLogger::log(const ucl::LogSeverity& severity, const std::string
 	std::cout << output.str() << std::endl;
 }
 
-ucl::ConsoleLogger::ConsoleLogger() : impl{std::make_unique<Impl>()} {}
+ug::ConsoleLogger::ConsoleLogger() : impl{std::make_unique<Impl>()} {}

@@ -2,12 +2,12 @@
 
 #include "Locator.h"
 
-namespace ucl {
+namespace ug {
 	class Audio;
 
-	typedef ucl::Locator<ucl::Audio> AudioLocator;
+	typedef ug::Locator<ug::Audio> AudioLocator;
 
 	template <>
-	ucl::Audio& ucl::AudioLocator::get();
+	ug::Audio& ug::AudioLocator::get();
 
 }

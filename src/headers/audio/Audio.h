@@ -4,7 +4,7 @@ namespace sf {
 	class SoundBuffer;
 }
 
-namespace ucl {
+namespace ug {
 	class Audio {
 	public:
 		/**

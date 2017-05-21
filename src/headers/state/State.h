@@ -6,7 +6,7 @@ namespace sf {
 	class RenderTarget;
 }
 
-namespace ucl {
+namespace ug {
 	class State {
 	public:
 		virtual void handleEvent(sf::Event& event) {};

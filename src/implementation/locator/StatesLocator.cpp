@@ -2,10 +2,10 @@
 #include <state/SimpleStateManager.h>
 
 template <>
-std::unique_ptr<ucl::StateManager> ucl::StatesLocator::object{new SimpleStateManager()};
+std::unique_ptr<ug::StateManager> ug::StatesLocator::object{new SimpleStateManager()};
 
 template <>
-ucl::StateManager& ucl::StatesLocator::get() {
+ug::StateManager& ug::StatesLocator::get() {
 	if (!object) throw NoServiceProvidedException("STATE_MANAGER");
 	return *object;
 }

@@ -1,9 +1,9 @@
 #include <resource/Resources.h>
 
-std::string ucl::Resources::getResourcesRoot() {
+std::string ug::Resources::getResourcesRoot() {
 	return "resources/";
 }
 
-std::string ucl::Resources::createResourcesPath(const std::string& internalPath) {
+std::string ug::Resources::createResourcesPath(const std::string& internalPath) {
 	return getResourcesRoot() + internalPath;
 }

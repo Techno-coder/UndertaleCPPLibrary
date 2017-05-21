@@ -3,7 +3,7 @@
 #include <memory>
 #include "Audio.h"
 
-namespace ucl {
+namespace ug {
 	class LoggedAudio : public Audio {
 		struct Impl;
 		std::unique_ptr<Impl> impl;

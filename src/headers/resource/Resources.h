@@ -2,7 +2,7 @@
 
 #include <string>
 
-namespace ucl {
+namespace ug {
 	class Resources {
 	public:
 		static std::string getResourcesRoot();

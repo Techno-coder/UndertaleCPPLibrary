@@ -4,12 +4,12 @@
 #include "EncounterBaseButton.h"
 
 namespace ug {
-	class FightButton : public EncounterBaseButton {
+	class ItemButton : public EncounterBaseButton {
 		struct Impl;
 		std::unique_ptr<Impl> impl;
 		sf::Texture& getTexture(bool isHighlighted) override;
 	public:
-		FightButton();
+		ItemButton();
 	};
 }
 

@@ -2,7 +2,7 @@
 
 #include "StateManager.h"
 
-namespace ucl {
+namespace ug {
 	class SimpleStateManager : public StateManager {
 		struct Impl;
 		std::unique_ptr<Impl> impl;

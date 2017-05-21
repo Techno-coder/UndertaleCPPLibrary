@@ -2,10 +2,10 @@
 #include <audio/SimpleAudio.h>
 
 template <>
-std::unique_ptr<ucl::Audio> ucl::AudioLocator::object{new SimpleAudio()};
+std::unique_ptr<ug::Audio> ug::AudioLocator::object{new SimpleAudio()};
 
 template <>
-ucl::Audio& ucl::AudioLocator::get() {
+ug::Audio& ug::AudioLocator::get() {
 	if (!object) throw NoServiceProvidedException("AUDIO");
 	return *object;
 }

@@ -2,7 +2,7 @@
 
 #include <string>
 
-namespace ucl {
+namespace ug {
 	enum class LogSeverity {
 		DEBUG, /**< Used to provide more information about the running of the program */
 		INFO, /**< General information about the running of the program */
