@@ -10,3 +10,5 @@ ug::ActButton::ActButton() : impl(std::make_unique<Impl>()) {}
 sf::Texture& ug::ActButton::getTexture(bool isHighlighted) {
 	return *(isHighlighted ? impl->textures.highlight : impl->textures.normal);
 }
+
+ug::ActButton::~ActButton() {}

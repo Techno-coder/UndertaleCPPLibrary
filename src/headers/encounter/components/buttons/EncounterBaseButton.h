@@ -4,6 +4,7 @@
 #include "EncounterButton.h"
 
 #include <SFML/Graphics/Texture.hpp>
+#include <resource/Resources.h>
 
 namespace ug {
 	template <typename T>
@@ -12,8 +13,14 @@ namespace ug {
 		static std::unique_ptr<sf::Texture> normal;
 
 		EncounterButtonStaticTextures(const std::string& internalHighlightPath, const std::string& internalNormalPath) {
-			if (!highlight) highlight->loadFromFile(internalHighlightPath);
-			if (!normal) normal->loadFromFile(internalNormalPath);
+			if (!highlight) {
+				highlight.reset(new sf::Texture());
+				highlight->loadFromFile(Resources::createResourcesPath(internalHighlightPath));
+			}
+			if (!normal) {
+				normal.reset(new sf::Texture());
+				normal->loadFromFile(Resources::createResourcesPath(internalNormalPath));
+			}
 		}
 	};
 

@@ -10,6 +10,7 @@ namespace ug {
 		sf::Texture& getTexture(bool isHighlighted) override;
 	public:
 		ItemButton();
+		virtual ~ItemButton();
 	};
 }
 

@@ -5,7 +5,7 @@ namespace sf {
 }
 
 namespace ug {
-	class FightBar {
+	class FightBar { //TODO redo the api because it succs
 	public:
 		virtual void update(float attackSpeed) = 0;
 		virtual void draw(sf::RenderTarget& target) = 0;

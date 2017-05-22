@@ -16,7 +16,7 @@ ug::Arena::Arena() : impl(std::make_unique<Impl>()) {
 	impl->rectangle.setOutlineColor(sf::Color::White);
 	impl->rectangle.setOutlineThickness(5);
 	resize(570, 130);
-	setPosition(320, 385);
+	setPosition(320, 320);
 }
 
 void ug::Arena::resize(float width, float height) {
@@ -30,4 +30,6 @@ void ug::Arena::resize(float width, float height) {
 void ug::Arena::setPosition(float x, float y) {
 	impl->rectangle.setPosition(x, y);
 }
+
+ug::Arena::~Arena() {}
 

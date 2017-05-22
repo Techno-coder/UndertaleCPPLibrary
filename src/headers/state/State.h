@@ -9,6 +9,8 @@ namespace sf {
 namespace ug {
 	class State {
 	public:
+		virtual void enter() {};
+
 		virtual void handleEvent(sf::Event& event) {};
 
 		virtual void update() {};

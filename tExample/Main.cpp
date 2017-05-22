@@ -1,12 +1,52 @@
 #include <iostream>
-#include <SFML/Audio/SoundBuffer.hpp>
-#include <audio/Audio.h>
-#include <locator/AudioLocator.h>
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <locator/StatesLocator.h>
+#include <state/StateManager.h>
+
+#include <SFML/Window/Event.hpp>
+#include <encounter/states/ActionSelectState.h>
+#include <locator/LoggerLocator.h>
+#include <logging/Logger.h>
+#include <encounter/components/soul/RedSoul.h>
+#include <locator/PlayerLocator.h>
+#include <player/Player.h>
+#include <player/PlayerStatistics.h>
 
 int main() {
-	sf::SoundBuffer buffer;
-	buffer.loadFromFile("resources/default/encounter/fight/soundSlice.wav");
+	ug::PlayerLocator::get().statistics().setName("Chara");
+	ug::PlayerLocator::get().statistics().setLevel(20);
+	ug::PlayerLocator::get().statistics().setCurrentHealth(10);
+	ug::PlayerLocator::get().statistics().setMaxHealth(50);
 
-	auto& existingAudio = ug::AudioLocator::get();
-	ug::AudioLocator::get().playSound(buffer);
+	ug::StatesLocator::get().pushState(std::make_unique<ug::ActionSelectState>([](ug::ButtonInterface::Button button) {
+		ug::LoggerLocator::get().log(ug::LogSeverity::DEBUG, "Yo this was called from a callback!");
+	}, std::make_unique<ug::RedSoul>()));
+
+	sf::RenderWindow window;
+	window.create(sf::VideoMode(640, 480), "Undertale Game");
+	window.setVerticalSyncEnabled(true);
+
+	sf::Clock clock;
+	sf::Time accumulator = sf::Time::Zero;
+	sf::Time ups = sf::seconds(1.f / 60.f);
+	while (window.isOpen()) {
+		sf::Event event;
+		while (window.pollEvent(event)) {
+			if (event.type == sf::Event::Closed) {
+				window.close();
+				return 0;
+			}
+			ug::StatesLocator::get().handleEvent(event);
+		}
+		while (accumulator > ups) {
+			accumulator -= ups;
+			ug::StatesLocator::get().update();
+		}
+
+		window.clear(sf::Color::Black);
+		ug::StatesLocator::get().draw(window);
+		window.display();
+
+		accumulator += clock.restart();
+	}
 }

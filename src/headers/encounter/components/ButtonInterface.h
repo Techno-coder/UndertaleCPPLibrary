@@ -18,6 +18,8 @@ namespace ug {
 		                std::unique_ptr<EncounterButton> buttonThree,
 		                std::unique_ptr<EncounterButton> buttonFour
 		);
+		virtual ~ButtonInterface();
+
 		/**
 		 * Draw the four buttons
 		 * @param target
@@ -27,11 +29,17 @@ namespace ug {
 		enum class Button {
 			ONE, TWO, THREE, FOUR, NONE
 		};
+
+		static constexpr Button FIGHT = Button::ONE;
+		static constexpr Button ACT = Button::TWO;
+		static constexpr Button ITEM = Button::THREE;
+		static constexpr Button MERCY = Button::FOUR;
+
 		/**
 		 * Set the button that should be highlighted
 		 * @param button The button
 		 */
-		void setHighlighted(Button button);
+		void setHighlighted(const Button& button);
 		/**
 		 * Set the top left position of all the buttons
 		 * @param x Distance from left
@@ -39,5 +47,7 @@ namespace ug {
 		 */
 		void setTopLeftPosition(float x, float y);
 	};
+
+	std::unique_ptr<ButtonInterface> getNewDefaultButtonInterface();
 }
 

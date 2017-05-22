@@ -10,6 +10,7 @@ namespace ug {
 		sf::Texture& getTexture(bool isHighlighted) override;
 	public:
 		ActButton();
+		virtual ~ActButton();
 	};
 }
 

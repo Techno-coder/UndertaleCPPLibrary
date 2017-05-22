@@ -12,6 +12,7 @@ namespace ug {
 		std::unique_ptr<Impl> impl;
 	public:
 		Arena();
+		~Arena();
 		void draw(sf::RenderTarget& target);
 		/**
 		 * Changes the size of the rectangle relative from the center

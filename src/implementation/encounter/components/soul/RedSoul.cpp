@@ -14,6 +14,7 @@ struct ug::RedSoul::Impl {
 			texture->loadFromFile(Resources::createResourcesPath("default/encounter/heartDefend.png"));
 		}
 		sprite.setTexture(*texture);
+		sprite.setOrigin(sprite.getGlobalBounds().width / 2, sprite.getGlobalBounds().height / 2);
 	}
 };
 
@@ -24,3 +25,9 @@ void ug::RedSoul::draw(sf::RenderTarget& target) {
 }
 
 ug::RedSoul::RedSoul() : impl(std::make_unique<Impl>()) {}
+
+ug::RedSoul::~RedSoul() {}
+
+void ug::RedSoul::setPosition(float x, float y) {
+	impl->sprite.setPosition(x, y);
+}

@@ -3,6 +3,15 @@
 #include <array>
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <encounter/components/buttons/EncounterButton.h>
+#include <encounter/components/buttons/ActButton.h>
+#include <encounter/components/buttons/FightButton.h>
+#include <encounter/components/buttons/ItemButton.h>
+#include <encounter/components/buttons/MercyButton.h>
+
+constexpr ug::ButtonInterface::Button ug::ButtonInterface::FIGHT;
+constexpr ug::ButtonInterface::Button ug::ButtonInterface::ACT;
+constexpr ug::ButtonInterface::Button ug::ButtonInterface::ITEM;
+constexpr ug::ButtonInterface::Button ug::ButtonInterface::MERCY;
 
 struct ug::ButtonInterface::Impl {
 	std::array<std::unique_ptr<EncounterButton>, 4> buttons;
@@ -26,7 +35,7 @@ void ug::ButtonInterface::draw(sf::RenderTarget& target) {
 	}
 }
 
-void ug::ButtonInterface::setHighlighted(ug::ButtonInterface::Button button) {
+void ug::ButtonInterface::setHighlighted(const Button& button) {
 	for (auto& ptr : impl->buttons) {
 		ptr->setHighlighted(false);
 	}
@@ -50,6 +59,18 @@ void ug::ButtonInterface::setHighlighted(ug::ButtonInterface::Button button) {
 
 void ug::ButtonInterface::setTopLeftPosition(float x, float y) {
 	for (int i = 0; i < impl->buttons.size(); ++i) {
-		impl->buttons[i]->setTopLeftPosition((155 * i) + x, y);
+		impl->buttons[i]->setTopLeftPosition((157 * i) + x, y);
 	}
 }
+
+ug::ButtonInterface::~ButtonInterface() {}
+
+std::unique_ptr<ug::ButtonInterface> ug::getNewDefaultButtonInterface() {
+	return std::make_unique<ug::ButtonInterface>(
+			std::make_unique<ug::FightButton>(),
+			std::make_unique<ug::ActButton>(),
+			std::make_unique<ug::ItemButton>(),
+			std::make_unique<ug::MercyButton>()
+	);
+};
+

@@ -10,3 +10,5 @@ ug::MercyButton::MercyButton() : impl(std::make_unique<Impl>()) {}
 sf::Texture& ug::MercyButton::getTexture(bool isHighlighted) {
 	return *(isHighlighted ? impl->textures.highlight : impl->textures.normal);
 }
+
+ug::MercyButton::~MercyButton() {}
