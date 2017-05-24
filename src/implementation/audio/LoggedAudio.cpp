@@ -7,7 +7,7 @@ struct ug::LoggedAudio::Impl {
 };
 
 void ug::LoggedAudio::playSound(const sf::SoundBuffer& buffer) {
-	Locator<Logger>::get().log(LogSeverity::DEBUG, "Sound was played");
+	Locator<Logger>::get()->log(LogSeverity::DEBUG, "Sound was played");
 	impl->audio->playSound(buffer);
 }
 

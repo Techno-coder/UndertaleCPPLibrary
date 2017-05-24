@@ -2,10 +2,10 @@
 #include <player/Player.h>
 
 template <>
-std::unique_ptr<ug::Player> ug::PlayerLocator::object{new Player()};
+std::shared_ptr<ug::Player> ug::PlayerLocator::object{new Player()};
 
 template <>
-ug::Player& ug::PlayerLocator::get() {
+std::shared_ptr<ug::Player> ug::PlayerLocator::get() {
 	if (!object) throw NoServiceProvidedException("PLAYER");
-	return *object;
+	return object;
 }

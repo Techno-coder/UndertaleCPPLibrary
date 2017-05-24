@@ -1,0 +1,30 @@
+FONT FONT_MONO all/fontDTMMono.otf
+FONT FONT_SANS all/fontDTMSans.otf
+FONT FONT_CRYPT statistics/fontCrypt.ttf
+
+SOUND OPTION_MOVE all/soundOptionMove.wav
+SOUND OPTION_CONFIRM all/soundOptionConfirm.wav
+
+FONT ENCOUNTER_FONT_MARS encounter/fontMars.ttf
+FONT ENCOUNTER_FONT_HACHICRO encounter/fight/fontHachicro.ttf
+SOUND ENCOUNTER_SOUND_HIT encounter/fight/soundHit.wav
+SOUND ENCOUNTER_SOUND_SLICE encounter/fight/soundSlice.wav
+
+TEXTURE ENCOUNTER_HEART_RED encounter/heartDefend.png
+
+TEXTURE ENCOUNTER_BUTTON_FIGHT encounter/buttonFight.png
+TEXTURE ENCOUNTER_BUTTON_FIGHT_HIGHLIGHT encounter/buttonFightHighlight.png
+TEXTURE ENCOUNTER_BUTTON_ACT encounter/buttonAct.png
+TEXTURE ENCOUNTER_BUTTON_ACT_HIGHLIGHT encounter/buttonActHighlight.png
+TEXTURE ENCOUNTER_BUTTON_ITEM encounter/buttonItem.png
+TEXTURE ENCOUNTER_BUTTON_ITEM_HIGHLIGHT encounter/buttonItemHighlight.png
+TEXTURE ENCOUNTER_BUTTON_MERCY encounter/buttonMercy.png
+TEXTURE ENCOUNTER_BUTTON_MERCY_HIGHLIGHT encounter/buttonMercyHighlight.png
+
+TEXTURE ENCOUNTER_FIGHT_BAR encounter/fight/fightBar.png
+TEXTURE ENCOUNTER_FIGHT_SLICE_0 encounter/fight/slice0.png
+TEXTURE ENCOUNTER_FIGHT_SLICE_1 encounter/fight/slice1.png
+TEXTURE ENCOUNTER_FIGHT_SLICE_2 encounter/fight/slice2.png
+TEXTURE ENCOUNTER_FIGHT_SLICE_3 encounter/fight/slice3.png
+TEXTURE ENCOUNTER_FIGHT_SLICE_4 encounter/fight/slice4.png
+TEXTURE ENCOUNTER_FIGHT_SLICE_5 encounter/fight/slice5.png

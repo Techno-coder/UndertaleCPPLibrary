@@ -2,23 +2,17 @@
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
-#include <resource/Resources.h>
+#include <locator/ResourceLocator.h>
+#include <resource/ResourceResolver.h>
 
 struct ug::RedSoul::Impl {
-	static std::unique_ptr<sf::Texture> texture;
 	sf::Sprite sprite;
 
 	Impl() {
-		if (!texture) {
-			texture.reset(new sf::Texture);
-			texture->loadFromFile(Resources::createResourcesPath("default/encounter/heartDefend.png"));
-		}
-		sprite.setTexture(*texture);
+		sprite.setTexture(ResourceLocator::get()->getTexture("ENCOUNTER_HEART_RED"));
 		sprite.setOrigin(sprite.getGlobalBounds().width / 2, sprite.getGlobalBounds().height / 2);
 	}
 };
-
-std::unique_ptr<sf::Texture> ug::RedSoul::Impl::texture;
 
 void ug::RedSoul::draw(sf::RenderTarget& target) {
 	target.draw(impl->sprite);

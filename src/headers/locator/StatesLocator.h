@@ -8,6 +8,6 @@ namespace ug {
 	typedef ug::Locator<ug::StateManager> StatesLocator;
 
 	template <>
-	ug::StateManager& ug::StatesLocator::get();
+	std::shared_ptr<ug::StateManager> ug::StatesLocator::get();
 
 }

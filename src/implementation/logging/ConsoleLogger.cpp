@@ -35,3 +35,5 @@ void ug::ConsoleLogger::log(const ug::LogSeverity& severity, const std::string& 
 }
 
 ug::ConsoleLogger::ConsoleLogger() : impl{std::make_unique<Impl>()} {}
+
+ug::ConsoleLogger::~ConsoleLogger() {}

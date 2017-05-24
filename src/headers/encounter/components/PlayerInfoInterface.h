@@ -9,11 +9,13 @@ namespace sf {
 namespace ug {
 	class PlayerStatistics;
 
+	class ResourceResolver;
+
 	class PlayerInfoInterface {
 		struct Impl;
 		std::unique_ptr<Impl> impl;
 	public:
-		PlayerInfoInterface(const PlayerStatistics& initialStatistics);
+		PlayerInfoInterface(const PlayerStatistics& initialStatistics, std::shared_ptr<ResourceResolver> resources);
 		~PlayerInfoInterface();
 
 		void draw(sf::RenderTarget& target);

@@ -10,6 +10,8 @@ namespace sf {
 namespace ug {
 	class PlayerStatistics;
 
+	class ResourceResolver;
+
 	/**
 	 * Encapsulates the buttons, arena and player info interface
 	 */
@@ -17,7 +19,7 @@ namespace ug {
 		struct Impl;
 		std::unique_ptr<Impl> impl;
 	public:
-		EncounterInterface(const ug::PlayerStatistics& newStatistics);
+		EncounterInterface(const ug::PlayerStatistics& newStatistics, std::shared_ptr<ResourceResolver> resources);
 		~EncounterInterface();
 
 		void draw(sf::RenderTarget& target);

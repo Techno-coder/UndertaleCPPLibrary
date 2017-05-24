@@ -8,5 +8,5 @@ namespace ug {
 	typedef ug::Locator<ug::Player> PlayerLocator;
 
 	template <>
-	ug::Player& ug::PlayerLocator::get();
+	std::shared_ptr<ug::Player> ug::PlayerLocator::get();
 }

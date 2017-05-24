@@ -13,27 +13,27 @@ namespace ug {
 
 	template <typename T>
 	class Locator {
-		static std::unique_ptr<T> object;
+		static std::shared_ptr<T> object;
 	public:
 		/**
 		 * Gets a previously provided object
 		 * @return The current stored object for this template type
 		 * @throws ucl::NoServiceProvidedException Thrown if no object was provided
 		 */
-		static T& get() {
+		static std::shared_ptr<T> get() {
 			if (!object) throw NoServiceProvidedException("UNKNOWN");
-			return *object;
+			return object;
 		}
 
 		/**
 		 * Provides an object for this template type
 		 * @param newObject The object to be stored
 		 */
-		static void provide(std::unique_ptr<T> newObject) {
-			object = std::move(newObject);
+		static void provide(std::shared_ptr<T> newObject) {
+			object = newObject;
 		}
 	};
 
 	template <typename T>
-	std::unique_ptr<T> ug::Locator<T>::object;
+	std::shared_ptr<T> ug::Locator<T>::object;
 }

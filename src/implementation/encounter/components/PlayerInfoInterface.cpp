@@ -4,12 +4,9 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
-#include <resource/Resources.h>
+#include <resource/ResourceResolver.h>
 
 struct ug::PlayerInfoInterface::Impl {
-	static std::unique_ptr<sf::Font> crypt;
-	static std::unique_ptr<sf::Font> mars;
-
 	sf::Text playerName;
 	sf::Text playerLevel;
 	sf::Text playerHealthLabel;
@@ -18,29 +15,16 @@ struct ug::PlayerInfoInterface::Impl {
 	sf::RectangleShape maxHealthBar;
 
 	Impl() {
-		if (!crypt) {
-			crypt.reset(new sf::Font);
-			crypt->loadFromFile(Resources::createResourcesPath("default/statistics/fontCrypt.ttf"));
-		}
-		if (!mars) {
-			mars.reset(new sf::Font);
-			mars->loadFromFile(Resources::createResourcesPath("default/encounter/fontMars.ttf"));
-		}
-
-		playerName.setFont(*mars);
 		playerName.setCharacterSize(25);
 		playerName.setFillColor(sf::Color::White);
 
-		playerLevel.setFont(*mars);
 		playerLevel.setCharacterSize(25);
 		playerLevel.setFillColor(sf::Color::White);
 
-		playerHealthLabel.setFont(*crypt);
 		playerHealthLabel.setCharacterSize(15);
 		playerHealthLabel.setFillColor(sf::Color::White);
 		playerHealthLabel.setString("HP");
 
-		playerHealthFraction.setFont(*mars);
 		playerHealthFraction.setCharacterSize(25);
 		playerHealthFraction.setFillColor(sf::Color::White);
 
@@ -56,9 +40,6 @@ struct ug::PlayerInfoInterface::Impl {
 		maxHealthBar.setPosition(240, 7);
 	}
 };
-
-std::unique_ptr<sf::Font> ug::PlayerInfoInterface::Impl::crypt;
-std::unique_ptr<sf::Font> ug::PlayerInfoInterface::Impl::mars;
 
 ug::PlayerInfoInterface::~PlayerInfoInterface() {}
 
@@ -100,8 +81,14 @@ void ug::PlayerInfoInterface::updateInterface(const ug::PlayerStatistics& newSta
 	                                       impl->playerHealthFraction.getPosition().y);
 }
 
-ug::PlayerInfoInterface::PlayerInfoInterface(const ug::PlayerStatistics& initialStatistics) : impl(
+ug::PlayerInfoInterface::PlayerInfoInterface(const PlayerStatistics& initialStatistics,
+                                             std::shared_ptr<ResourceResolver> resources)
+		: impl(
 		std::make_unique<Impl>()) {
+	impl->playerName.setFont(resources->getFont("ENCOUNTER_FONT_MARS"));
+	impl->playerLevel.setFont(resources->getFont("ENCOUNTER_FONT_MARS"));
+	impl->playerHealthLabel.setFont(resources->getFont("FONT_CRYPT"));
+	impl->playerHealthFraction.setFont(resources->getFont("ENCOUNTER_FONT_MARS"));
 	updateInterface(initialStatistics);
 	setTopLeftPosition(30, 393);
 }

@@ -3,31 +3,21 @@
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
-#include <resource/Resources.h>
 #include <cmath>
+#include <resource/ResourceResolver.h>
 
 struct ug::SimpleFightBar::Impl {
-	static std::unique_ptr<sf::Texture> fightBarTexture;
 	sf::Sprite fightBar;
 	sf::RectangleShape targetLine;
 	int updateCounter = -1;
 
 	Impl() {
-		if (!fightBarTexture) {
-			fightBarTexture.reset(new sf::Texture());
-			fightBarTexture->loadFromFile(Resources::createResourcesPath("default/encounter/fight/fightBar.png"));
-		}
-
-		fightBar.setPosition(0, 4);
-		fightBar.setTexture(*fightBarTexture);
 		targetLine.setPosition(0, 0);
 		targetLine.setFillColor(sf::Color::Black);
 		targetLine.setOutlineThickness(3);
 		targetLine.setOutlineColor(sf::Color::White);
 	}
 };
-
-std::unique_ptr<sf::Texture> ug::SimpleFightBar::Impl::fightBarTexture;
 
 void ug::SimpleFightBar::update(float attackSpeed) {
 	if (impl->updateCounter >= 0) {
@@ -62,6 +52,8 @@ float ug::SimpleFightBar::onConfirmKeyPress() {
 	return distFromCenter;
 }
 
-ug::SimpleFightBar::SimpleFightBar() : impl(std::make_unique<Impl>()) {
+ug::SimpleFightBar::SimpleFightBar(std::shared_ptr<ResourceResolver> resources) : impl(std::make_unique<Impl>()) {
+	impl->fightBar.setPosition(0, 4);
+	impl->fightBar.setTexture(resources->getTexture("ENCOUNTER_FIGHT_BAR"));
 	setTopLeftPosition(47, 263);
 }

@@ -20,10 +20,6 @@ namespace ug {
 		);
 		virtual ~ButtonInterface();
 
-		/**
-		 * Draw the four buttons
-		 * @param target
-		 */
 		void draw(sf::RenderTarget& target);
 
 		enum class Button {

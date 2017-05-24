@@ -26,3 +26,5 @@ void ug::SimpleAudio::playSound(const sf::SoundBuffer& buffer) {
 }
 
 ug::SimpleAudio::SimpleAudio() : impl{std::make_unique<Impl>()} {}
+
+ug::SimpleAudio::~SimpleAudio() {}

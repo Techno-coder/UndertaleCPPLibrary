@@ -8,6 +8,6 @@ namespace ug {
 	typedef ug::Locator<ug::Audio> AudioLocator;
 
 	template <>
-	ug::Audio& ug::AudioLocator::get();
+	std::shared_ptr<ug::Audio> ug::AudioLocator::get();
 
 }

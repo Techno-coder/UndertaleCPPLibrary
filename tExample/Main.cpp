@@ -11,16 +11,17 @@
 #include <locator/PlayerLocator.h>
 #include <player/Player.h>
 #include <player/PlayerStatistics.h>
+#include <locator/ResourceLocator.h>
 
 int main() {
-	ug::PlayerLocator::get().statistics().setName("Chara");
-	ug::PlayerLocator::get().statistics().setLevel(20);
-	ug::PlayerLocator::get().statistics().setCurrentHealth(10);
-	ug::PlayerLocator::get().statistics().setMaxHealth(50);
+	ug::PlayerLocator::get()->statistics().setName("Chara");
+	ug::PlayerLocator::get()->statistics().setLevel(20);
+	ug::PlayerLocator::get()->statistics().setCurrentHealth(10);
+	ug::PlayerLocator::get()->statistics().setMaxHealth(50);
 
-	ug::StatesLocator::get().pushState(std::make_unique<ug::ActionSelectState>([](ug::ButtonInterface::Button button) {
-		ug::LoggerLocator::get().log(ug::LogSeverity::DEBUG, "Yo this was called from a callback!");
-	}, std::make_unique<ug::RedSoul>()));
+	ug::StatesLocator::get()->pushState(std::make_unique<ug::ActionSelectState>([](ug::ButtonInterface::Button button) {
+		ug::LoggerLocator::get()->log(ug::LogSeverity::DEBUG, "Yo this was called from a callback!");
+	}, std::make_unique<ug::RedSoul>(), ug::ResourceLocator::get()));
 
 	sf::RenderWindow window;
 	window.create(sf::VideoMode(640, 480), "Undertale Game");
@@ -36,15 +37,15 @@ int main() {
 				window.close();
 				return 0;
 			}
-			ug::StatesLocator::get().handleEvent(event);
+			ug::StatesLocator::get()->handleEvent(event);
 		}
 		while (accumulator > ups) {
 			accumulator -= ups;
-			ug::StatesLocator::get().update();
+			ug::StatesLocator::get()->update();
 		}
 
 		window.clear(sf::Color::Black);
-		ug::StatesLocator::get().draw(window);
+		ug::StatesLocator::get()->draw(window);
 		window.display();
 
 		accumulator += clock.restart();

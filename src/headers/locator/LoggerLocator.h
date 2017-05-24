@@ -8,5 +8,5 @@ namespace ug {
 	typedef ug::Locator<ug::Logger> LoggerLocator;
 
 	template <>
-	ug::Logger& ug::LoggerLocator::get();
+	std::shared_ptr<ug::Logger> ug::LoggerLocator::get();
 }

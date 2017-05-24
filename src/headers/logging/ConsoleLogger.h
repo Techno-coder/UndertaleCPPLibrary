@@ -9,6 +9,7 @@ namespace ug {
 		std::unique_ptr<Impl> impl;
 	public:
 		ConsoleLogger();
+		~ConsoleLogger();
 		void log(const LogSeverity& severity, const std::string& message) override;
 	};
 }

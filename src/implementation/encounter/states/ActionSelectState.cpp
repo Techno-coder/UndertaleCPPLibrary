@@ -6,8 +6,12 @@
 #include <locator/PlayerLocator.h>
 #include <player/Player.h>
 #include <player/PlayerStatistics.h>
+#include <locator/AudioLocator.h>
+#include <audio/Audio.h>
 
 struct ug::ActionSelectState::Impl {
+	std::shared_ptr<ResourceResolver> resources;
+
 	EncounterInterface encounterInterface;
 	Controls controls;
 	std::unique_ptr<Soul> soul;
@@ -51,12 +55,15 @@ struct ug::ActionSelectState::Impl {
 	}
 
 	void updateButtonsInterface() {
-		//TODO play sound
+		AudioLocator::get()->playSound(resources->getSound("OPTION_MOVE"));
 		encounterInterface.setHighlightedButton(buttonResolver());
 		updateSoul();
 	}
 
-	Impl() : encounterInterface(ug::PlayerLocator::get().statistics()) {
+	Impl(std::shared_ptr<ResourceResolver> resourceResolver) : encounterInterface(
+			ug::PlayerLocator::get()->statistics(),
+			resourceResolver),
+	                                                           resources(resourceResolver) {
 		controls.setOnPressedListener(Controls::KeyType::LEFT, [this]() {
 			if (--currentlySelected < 0) currentlySelected = 3;
 			updateButtonsInterface();
@@ -66,7 +73,7 @@ struct ug::ActionSelectState::Impl {
 			updateButtonsInterface();
 		});
 		controls.setOnPressedListener(Controls::KeyType::CONFIRM, [this]() {
-			//TODO play sound
+			AudioLocator::get()->playSound(resources->getSound("OPTION_CONFIRM"));
 			callbackOnSelect(buttonResolver());
 		});
 		encounterInterface.setHighlightedButton(ButtonInterface::FIGHT);
@@ -86,8 +93,8 @@ void ug::ActionSelectState::draw(sf::RenderTarget& target) {
 }
 
 ug::ActionSelectState::ActionSelectState(std::function<void(ButtonInterface::Button)> callbackOnSelect,
-                                         std::unique_ptr<Soul> soul) : impl(
-		std::make_unique<Impl>()) {
+                                         std::unique_ptr<Soul> soul, std::shared_ptr<ResourceResolver> resources)
+		: impl(std::make_unique<Impl>(resources)) {
 	impl->callbackOnSelect = callbackOnSelect;
 	impl->soul = std::move(soul);
 	impl->updateSoul();
@@ -96,5 +103,5 @@ ug::ActionSelectState::ActionSelectState(std::function<void(ButtonInterface::But
 ug::ActionSelectState::~ActionSelectState() {}
 
 void ug::ActionSelectState::enter() {
-	impl->encounterInterface.updateStatistics(ug::PlayerLocator::get().statistics());
+	impl->encounterInterface.updateStatistics(ug::PlayerLocator::get()->statistics());
 }

@@ -10,7 +10,8 @@ struct ug::EncounterInterface::Impl {
 	Arena arena;
 	PlayerInfoInterface infoInterface;
 
-	Impl(const ug::PlayerStatistics& newStatistics) : infoInterface(newStatistics) {}
+	Impl(const ug::PlayerStatistics& newStatistics, std::shared_ptr<ResourceResolver> resources) : infoInterface(
+			newStatistics, resources) {}
 };
 
 void ug::EncounterInterface::draw(sf::RenderTarget& target) {
@@ -19,8 +20,9 @@ void ug::EncounterInterface::draw(sf::RenderTarget& target) {
 	impl->infoInterface.draw(target);
 }
 
-ug::EncounterInterface::EncounterInterface(const ug::PlayerStatistics& newStatistics) : impl(
-		std::make_unique<Impl>(newStatistics)) {}
+ug::EncounterInterface::EncounterInterface(const ug::PlayerStatistics& newStatistics,
+                                           std::shared_ptr<ResourceResolver> resources) : impl(
+		std::make_unique<Impl>(newStatistics, resources)) {}
 
 ug::EncounterInterface::~EncounterInterface() {}
 
